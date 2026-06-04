@@ -87,11 +87,8 @@ public class PeminjamanView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtNamaAnggota = new javax.swing.JTextField();
-        txtJudulBuku = new javax.swing.JTextField();
         txtTanggalPinjam = new javax.swing.JTextField();
         txtTanggalKembali = new javax.swing.JTextField();
-        txtStatus = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
@@ -99,6 +96,9 @@ public class PeminjamanView extends javax.swing.JFrame {
         btnKembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeminjaman = new javax.swing.JTable();
+        cmbNamaAnggota = new javax.swing.JComboBox<>();
+        cmbJudulBuku = new javax.swing.JComboBox<>();
+        cmbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +145,13 @@ public class PeminjamanView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPeminjaman);
 
+        cmbNamaAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbJudulBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbJudulBuku.addActionListener(this::cmbJudulBukuActionPerformed);
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dipinjam", "Dikembalikan", "Terlambat" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,9 +168,9 @@ public class PeminjamanView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtTanggalKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                     .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtJudulBuku, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNamaAnggota, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtStatus))
+                    .addComponent(cmbNamaAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbJudulBuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -189,11 +196,11 @@ public class PeminjamanView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -205,7 +212,7 @@ public class PeminjamanView extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan)
@@ -220,11 +227,12 @@ public class PeminjamanView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-if (txtNamaAnggota.getText().isEmpty()
-        || txtJudulBuku.getText().isEmpty()
+if (cmbNamaAnggota.getSelectedItem().toString()== null
+        || cmbJudulBuku.getSelectedItem().toString()== null
         || txtTanggalPinjam.getText().isEmpty()
         || txtTanggalKembali.getText().isEmpty()
-        || txtStatus.getText().isEmpty()) {
+        || cmbStatus.getSelectedItem().toString()== null)
+        {
 
     JOptionPane.showMessageDialog(this,
             "Data Tidak Boleh Kosong");
@@ -239,11 +247,11 @@ if (txtNamaAnggota.getText().isEmpty()
 
     PreparedStatement pst = conn.prepareStatement(sql);
 
-    pst.setString(1, txtNamaAnggota.getText());
-    pst.setString(2, txtJudulBuku.getText());
+    pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
+    pst.setString(2, (String) cmbJudulBuku.getSelectedItem());
     pst.setString(3, txtTanggalPinjam.getText());
     pst.setString(4, txtTanggalKembali.getText());
-    pst.setString(5, txtStatus.getText());
+    pst.setString(5, cmbStatus.getSelectedItem().toString());
 
     pst.executeUpdate();
 
@@ -265,11 +273,11 @@ int baris = tblPeminjaman.getSelectedRow();
 
 id = tblPeminjaman.getValueAt(baris, 0).toString();
 
-txtNamaAnggota.setText(tblPeminjaman.getValueAt(baris, 1).toString());
-txtJudulBuku.setText(tblPeminjaman.getValueAt(baris, 2).toString());
+cmbNamaAnggota.setSelectedItem(tblPeminjaman.getValueAt(baris, 1).toString());
+cmbJudulBuku.setSelectedItem(tblPeminjaman.getValueAt(baris, 2).toString());
 txtTanggalPinjam.setText(tblPeminjaman.getValueAt(baris, 3).toString());
 txtTanggalKembali.setText(tblPeminjaman.getValueAt(baris, 4).toString());
-txtStatus.setText(tblPeminjaman.getValueAt(baris, 5).toString());        // TODO add your handling code here:
+cmbStatus.setSelectedItem(tblPeminjaman.getValueAt(baris, 5).toString());        // TODO add your handling code here:
     }//GEN-LAST:event_tblPeminjamanMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -281,11 +289,11 @@ try {
 
     PreparedStatement pst = conn.prepareStatement(sql);
 
-    pst.setString(1, txtNamaAnggota.getText());
-    pst.setString(2, txtJudulBuku.getText());
+    pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
+    pst.setString(2, (String) cmbJudulBuku.getSelectedItem());
     pst.setString(3, txtTanggalPinjam.getText());
     pst.setString(4, txtTanggalKembali.getText());
-    pst.setString(5, txtStatus.getText());
+    pst.setString(5, (String) cmbStatus.getSelectedItem());
     pst.setString(6, id);
 
     pst.executeUpdate();
@@ -336,11 +344,11 @@ if (pilih == JOptionPane.YES_OPTION) {
     }//GEN-LAST:event_btnHapusActionPerformed
     }
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-txtNamaAnggota.setText("");
-txtJudulBuku.setText("");
+cmbNamaAnggota.setSelectedIndex(0);
+cmbJudulBuku.setSelectedIndex(0);
 txtTanggalPinjam.setText("");
 txtTanggalKembali.setText("");
-txtStatus.setText("");        // TODO add your handling code here:
+cmbStatus.setSelectedIndex(0);        
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
@@ -348,6 +356,10 @@ new MenuUtama().setVisible(true);
 
 this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void cmbJudulBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbJudulBukuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbJudulBukuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,6 +392,9 @@ this.dispose();        // TODO add your handling code here:
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JComboBox<String> cmbJudulBuku;
+    private javax.swing.JComboBox<String> cmbNamaAnggota;
+    private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -387,9 +402,6 @@ this.dispose();        // TODO add your handling code here:
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPeminjaman;
-    private javax.swing.JTextField txtJudulBuku;
-    private javax.swing.JTextField txtNamaAnggota;
-    private javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtTanggalKembali;
     private javax.swing.JTextField txtTanggalPinjam;
     // End of variables declaration//GEN-END:variables
