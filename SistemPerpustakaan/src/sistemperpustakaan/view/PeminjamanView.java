@@ -25,6 +25,8 @@ public class PeminjamanView extends javax.swing.JFrame {
     public PeminjamanView() {
     initComponents();
     tampilData();
+    loadAnggota();
+    loadBuku();
     setLocationRelativeTo(null);
     setTitle("Data Peminjaman");
 }
@@ -73,6 +75,41 @@ public class PeminjamanView extends javax.swing.JFrame {
 
 }
 
+    private void loadAnggota() {
+    try {
+        Connection conn = Koneksi.getConnection();
+        String sql = "SELECT nama FROM anggota";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        cmbNamaAnggota.removeAllItems();
+        cmbNamaAnggota.addItem("Pilih Anggota");
+
+        while (rs.next()) {
+            cmbNamaAnggota.addItem(rs.getString("nama"));
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
+
+private void loadBuku() {
+    try {
+        Connection conn = Koneksi.getConnection();
+        String sql = "SELECT judul FROM buku";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        cmbJudulBuku.removeAllItems();
+        cmbJudulBuku.addItem("Pilih Buku");
+
+        while (rs.next()) {
+            cmbJudulBuku.addItem(rs.getString("judul"));
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
