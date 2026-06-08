@@ -7,6 +7,10 @@ import config.Koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemperpustakaan.view.MenuUtama;
@@ -16,6 +20,8 @@ import sistemperpustakaan.view.MenuUtama;
  */
 public class PeminjamanView extends javax.swing.JFrame {
     String id;
+    private static final int DENDA_PER_HARI = 1000;
+    private static final DateTimeFormatter FORMAT_TANGGAL = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PeminjamanView.class.getName());
 
@@ -40,6 +46,7 @@ public class PeminjamanView extends javax.swing.JFrame {
     model.addColumn("Tanggal Pinjam");
     model.addColumn("Tanggal Kembali");
     model.addColumn("Status");
+    model.addColumn("Denda");
 
     try {
 
@@ -59,7 +66,8 @@ public class PeminjamanView extends javax.swing.JFrame {
                 rs.getString("judul_buku"),
                 rs.getString("tanggal_pinjam"),
                 rs.getString("tanggal_kembali"),
-                rs.getString("status")
+                rs.getString("status"),
+                hitungDenda(rs.getString("tanggal_kembali"), rs.getString("status"))
             });
 
         }
@@ -109,6 +117,76 @@ private void loadBuku() {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
+}
+
+private boolean inputValid() {
+    if (cmbNamaAnggota.getSelectedIndex() <= 0
+            || cmbJudulBuku.getSelectedIndex() <= 0
+            || txtTanggalPinjam.getText().trim().isEmpty()
+            || txtTanggalKembali.getText().trim().isEmpty()
+            || cmbStatus.getSelectedItem() == null) {
+
+        JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong");
+        return false;
+    }
+
+    try {
+        LocalDate tanggalPinjam = LocalDate.parse(txtTanggalPinjam.getText().trim(), FORMAT_TANGGAL);
+        LocalDate tanggalKembali = LocalDate.parse(txtTanggalKembali.getText().trim(), FORMAT_TANGGAL);
+
+        if (tanggalKembali.isBefore(tanggalPinjam)) {
+            JOptionPane.showMessageDialog(this, "Tanggal kembali tidak boleh sebelum tanggal pinjam");
+            return false;
+        }
+    } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Format tanggal harus yyyy-MM-dd, contoh: 2026-06-08");
+        return false;
+    }
+
+    return true;
+}
+
+private long hitungDenda(String tanggalKembali, String status) {
+    if (!"Terlambat".equalsIgnoreCase(status) && !"Dipinjam".equalsIgnoreCase(status)) {
+        return 0;
+    }
+
+    try {
+        LocalDate batasKembali = LocalDate.parse(tanggalKembali, FORMAT_TANGGAL);
+        long hariTerlambat = ChronoUnit.DAYS.between(batasKembali, LocalDate.now());
+        return Math.max(0, hariTerlambat) * DENDA_PER_HARI;
+    } catch (DateTimeParseException e) {
+        return 0;
+    }
+}
+
+private boolean statusDipinjam(String status) {
+    return "Dipinjam".equalsIgnoreCase(status) || "Terlambat".equalsIgnoreCase(status);
+}
+
+private int getStokBuku(Connection conn, String judulBuku) throws Exception {
+    String sql = "SELECT stok FROM buku WHERE judul = ?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    pst.setString(1, judulBuku);
+    ResultSet rs = pst.executeQuery();
+
+    if (rs.next()) {
+        return rs.getInt("stok");
+    }
+
+    throw new Exception("Buku tidak ditemukan");
+}
+
+private void ubahStokBuku(Connection conn, String judulBuku, int perubahan) throws Exception {
+    if (perubahan < 0 && getStokBuku(conn, judulBuku) <= 0) {
+        throw new Exception("Stok buku habis");
+    }
+
+    String sql = "UPDATE buku SET stok = stok + ? WHERE judul = ?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    pst.setInt(1, perubahan);
+    pst.setString(2, judulBuku);
+    pst.executeUpdate();
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -270,44 +348,57 @@ private void loadBuku() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-if (cmbNamaAnggota.getSelectedItem().toString()== null
-        || cmbJudulBuku.getSelectedItem().toString()== null
-        || txtTanggalPinjam.getText().isEmpty()
-        || txtTanggalKembali.getText().isEmpty()
-        || cmbStatus.getSelectedItem().toString()== null)
-        {
-
-    JOptionPane.showMessageDialog(this,
-            "Data Tidak Boleh Kosong");
-
+if (!inputValid()) {
     return;
 }
         try {
 
     Connection conn = Koneksi.getConnection();
+    String judulBuku = cmbJudulBuku.getSelectedItem().toString();
+    String status = cmbStatus.getSelectedItem().toString();
+
+    conn.setAutoCommit(false);
+
+    if (statusDipinjam(status)) {
+        ubahStokBuku(conn, judulBuku, -1);
+    }
 
     String sql = "INSERT INTO peminjaman(nama_anggota, judul_buku, tanggal_pinjam, tanggal_kembali, status) VALUES (?, ?, ?, ?, ?)";
 
     PreparedStatement pst = conn.prepareStatement(sql);
 
     pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
-    pst.setString(2, (String) cmbJudulBuku.getSelectedItem());
-    pst.setString(3, txtTanggalPinjam.getText());
-    pst.setString(4, txtTanggalKembali.getText());
-    pst.setString(5, cmbStatus.getSelectedItem().toString());
+    pst.setString(2, judulBuku);
+    pst.setString(3, txtTanggalPinjam.getText().trim());
+    pst.setString(4, txtTanggalKembali.getText().trim());
+    pst.setString(5, status);
 
     pst.executeUpdate();
+    conn.commit();
 
     JOptionPane.showMessageDialog(this,
             "Data Peminjaman Berhasil Disimpan");
 
     tampilData();
+    loadBuku();
 
 } catch (Exception e) {
+
+    try {
+        Koneksi.getConnection().rollback();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
 
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
+} finally {
+    try {
+        Koneksi.getConnection().setAutoCommit(true);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -324,33 +415,80 @@ cmbStatus.setSelectedItem(tblPeminjaman.getValueAt(baris, 5).toString());       
     }//GEN-LAST:event_tblPeminjamanMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+if (id == null || id.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Pilih data yang akan diedit");
+    return;
+}
+
+if (!inputValid()) {
+    return;
+}
+
 try {
 
     Connection conn = Koneksi.getConnection();
+    conn.setAutoCommit(false);
+
+    String judulLama = "";
+    String statusLama = "";
+    String sqlLama = "SELECT judul_buku, status FROM peminjaman WHERE id_pinjam=?";
+    PreparedStatement pstLama = conn.prepareStatement(sqlLama);
+    pstLama.setString(1, id);
+    ResultSet rsLama = pstLama.executeQuery();
+
+    if (rsLama.next()) {
+        judulLama = rsLama.getString("judul_buku");
+        statusLama = rsLama.getString("status");
+    }
+
+    String judulBaru = cmbJudulBuku.getSelectedItem().toString();
+    String statusBaru = cmbStatus.getSelectedItem().toString();
+
+    if (statusDipinjam(statusLama)) {
+        ubahStokBuku(conn, judulLama, 1);
+    }
+
+    if (statusDipinjam(statusBaru)) {
+        ubahStokBuku(conn, judulBaru, -1);
+    }
 
     String sql = "UPDATE peminjaman SET nama_anggota=?, judul_buku=?, tanggal_pinjam=?, tanggal_kembali=?, status=? WHERE id_pinjam=?";
 
     PreparedStatement pst = conn.prepareStatement(sql);
 
     pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
-    pst.setString(2, (String) cmbJudulBuku.getSelectedItem());
-    pst.setString(3, txtTanggalPinjam.getText());
-    pst.setString(4, txtTanggalKembali.getText());
-    pst.setString(5, (String) cmbStatus.getSelectedItem());
+    pst.setString(2, judulBaru);
+    pst.setString(3, txtTanggalPinjam.getText().trim());
+    pst.setString(4, txtTanggalKembali.getText().trim());
+    pst.setString(5, statusBaru);
     pst.setString(6, id);
 
     pst.executeUpdate();
+    conn.commit();
 
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Diubah");
 
     tampilData();
+    loadBuku();
 
 } catch (Exception e) {
+
+    try {
+        Koneksi.getConnection().rollback();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
 
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
+} finally {
+    try {
+        Koneksi.getConnection().setAutoCommit(true);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -364,6 +502,19 @@ if (pilih == JOptionPane.YES_OPTION) {
         try {
 
     Connection conn = Koneksi.getConnection();
+    conn.setAutoCommit(false);
+
+    String judulLama = "";
+    String statusLama = "";
+    String sqlLama = "SELECT judul_buku, status FROM peminjaman WHERE id_pinjam=?";
+    PreparedStatement pstLama = conn.prepareStatement(sqlLama);
+    pstLama.setString(1, id);
+    ResultSet rsLama = pstLama.executeQuery();
+
+    if (rsLama.next()) {
+        judulLama = rsLama.getString("judul_buku");
+        statusLama = rsLama.getString("status");
+    }
 
     String sql = "DELETE FROM peminjaman WHERE id_pinjam=?";
 
@@ -373,16 +524,35 @@ if (pilih == JOptionPane.YES_OPTION) {
 
     pst.executeUpdate();
 
+    if (statusDipinjam(statusLama)) {
+        ubahStokBuku(conn, judulLama, 1);
+    }
+
+    conn.commit();
+
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Dihapus");
 
     tampilData();
+    loadBuku();
 
 } catch (Exception e) {
+
+    try {
+        Koneksi.getConnection().rollback();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
 
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
+} finally {
+    try {
+        Koneksi.getConnection().setAutoCommit(true);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnHapusActionPerformed
     }

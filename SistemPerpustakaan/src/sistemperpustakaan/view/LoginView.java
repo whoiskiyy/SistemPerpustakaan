@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import sistemperpustakaan.FlatLafSetup;
-import sistemperpustakaan.view.MenuUtama;
 
 /**
  *
@@ -41,8 +40,10 @@ public class LoginView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
+        cmbRole = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -69,13 +70,21 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2.setText("Password  :");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 96, 70, -1));
 
+        jLabel3.setText("Login Sebagai :");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 124, 90, -1));
+
         txtUsername.addActionListener(this::txtUsernameActionPerformed);
         getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 68, 202, -1));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 96, 202, -1));
 
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pustakawan", "Anggota" }));
+        getContentPane().add(cmbRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 124, 202, -1));
+
         jButton1.setText("Login");
         jButton1.addActionListener(this::jButton1ActionPerformed);
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 163, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 172, -1, -1));
+
+        jPanel4.setOpaque(false);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -114,24 +123,33 @@ public class LoginView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
     try {
+        String username = txtUsername.getText().trim();
+        String password = new String(txtPassword.getPassword());
+        String role = cmbRole.getSelectedItem().toString();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username dan password tidak boleh kosong");
+            return;
+        }
 
         Connection conn = Koneksi.getConnection();
+        String nama;
 
-        String sql = "SELECT * FROM user WHERE username=? AND password=?";
+        if ("Pustakawan".equals(role)) {
+            nama = loginPustakawan(conn, username, password);
+        } else {
+            nama = loginAnggota(conn, username, password);
+        }
 
-        PreparedStatement pst = conn.prepareStatement(sql);
-
-        pst.setString(1, txtUsername.getText());
-        pst.setString(2, txtPassword.getText());
-
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-
+        if (nama != null) {
     JOptionPane.showMessageDialog(this,
-            "Login Berhasil");
+            "Login " + role + " Berhasil");
 
-    new MenuUtama().setVisible(true);
+    if ("Pustakawan".equals(role)) {
+        new MenuUtama(nama).setVisible(true);
+    } else {
+        new MenuAnggota(nama).setVisible(true);
+    }
 
     this.dispose();
 
@@ -152,6 +170,47 @@ public class LoginView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private String loginPustakawan(Connection conn, String username, String password) {
+        String[] sqlList = {
+            "SELECT nama FROM pustakawan WHERE username=? AND password=?",
+            "SELECT nama FROM pustakawan WHERE email=? AND password=?",
+            "SELECT username AS nama FROM user WHERE username=? AND password=? AND role='pustakawan'",
+            "SELECT username AS nama FROM user WHERE username=? AND password=?"
+        };
+
+        return cariUser(conn, sqlList, username, password);
+    }
+
+    private String loginAnggota(Connection conn, String username, String password) {
+        String[] sqlList = {
+            "SELECT nama FROM anggota WHERE username=? AND password=?",
+            "SELECT nama FROM anggota WHERE email=? AND password=?",
+            "SELECT nama FROM anggota WHERE nama=? AND no_hp=?",
+            "SELECT username AS nama FROM user WHERE username=? AND password=? AND role='anggota'"
+        };
+
+        return cariUser(conn, sqlList, username, password);
+    }
+
+    private String cariUser(Connection conn, String[] sqlList, String username, String password) {
+        for (String sql : sqlList) {
+            try {
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, username);
+                pst.setString(2, password);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("nama");
+                }
+            } catch (Exception e) {
+                // Coba query berikutnya jika tabel/kolom belum tersedia di database.
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -164,15 +223,14 @@ public class LoginView extends javax.swing.JFrame {
     java.awt.EventQueue.invokeLater(() -> {
         new LoginView().setVisible(true);
     });
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new LoginView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> cmbRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
