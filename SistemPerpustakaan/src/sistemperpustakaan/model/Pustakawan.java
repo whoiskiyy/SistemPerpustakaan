@@ -38,11 +38,25 @@ public class Pustakawan extends User {
         System.out.println("Buku berhasil ditambahkan");
     }
 
+    public void tambahBuku(Buku buku) {
+        System.out.println("Buku " + buku.getJudul() + " berhasil ditambahkan");
+    }
+
     public void kelolaStok() {
         System.out.println("Stok buku dikelola");
     }
 
+    public void kelolaStok(Buku buku, int stokBaru) {
+        buku.setStok(stokBaru);
+        System.out.println("Stok buku " + buku.getJudul() + " dikelola");
+    }
+
     public void prosesPeminjaman() {
+        System.out.println("Peminjaman diproses");
+    }
+
+    public void prosesPeminjaman(Peminjaman peminjaman) {
+        peminjaman.pinjamBuku();
         System.out.println("Peminjaman diproses");
     }
 
@@ -50,7 +64,12 @@ public class Pustakawan extends User {
         System.out.println("Pengembalian diproses");
     }
 
-    public void lihatLaporan() {
-        System.out.println("Menampilkan laporan");
+    public void prosesPengembalian(Peminjaman peminjaman) {
+        peminjaman.kembalikanBuku();
+        System.out.println("Pengembalian diproses");
+    }
+
+    public String lihatLaporan() {
+        return "Menampilkan laporan";
     }
 }

@@ -57,7 +57,25 @@ public abstract class Buku {
     }
 
     public void setStok(int stok) {
+        if (stok < 0) {
+            throw new IllegalArgumentException("Stok buku tidak boleh kurang dari 0");
+        }
         this.stok = stok;
+    }
+
+    public boolean tersedia() {
+        return stok > 0;
+    }
+
+    public void kurangiStok() {
+        if (!tersedia()) {
+            throw new IllegalStateException("Stok buku habis");
+        }
+        stok--;
+    }
+
+    public void tambahStok() {
+        stok++;
     }
 
     // Method

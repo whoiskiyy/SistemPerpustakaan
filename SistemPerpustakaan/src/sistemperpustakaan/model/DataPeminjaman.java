@@ -1,16 +1,21 @@
 package sistemperpustakaan.model;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class DataPeminjaman implements Peminjaman {
 
     private String idPinjam;
-    private String tanggalPinjam;
-    private String tanggalKembali;
+    private LocalDate tanggalPinjam;
+    private LocalDate tanggalKembali;
     private boolean status;
+    private Buku bukuPinjam;
+    private static final int DENDA_PER_HARI = 1000;
 
     // Constructor
     public DataPeminjaman(String idPinjam,
-                           String tanggalPinjam,
-                           String tanggalKembali,
+                           LocalDate tanggalPinjam,
+                           LocalDate tanggalKembali,
                            boolean status) {
 
         this.idPinjam = idPinjam;
@@ -28,19 +33,19 @@ public class DataPeminjaman implements Peminjaman {
         this.idPinjam = idPinjam;
     }
 
-    public String getTanggalPinjam() {
+    public LocalDate getTanggalPinjam() {
         return tanggalPinjam;
     }
 
-    public void setTanggalPinjam(String tanggalPinjam) {
+    public void setTanggalPinjam(LocalDate tanggalPinjam) {
         this.tanggalPinjam = tanggalPinjam;
     }
 
-    public String getTanggalKembali() {
+    public LocalDate getTanggalKembali() {
         return tanggalKembali;
     }
 
-    public void setTanggalKembali(String tanggalKembali) {
+    public void setTanggalKembali(LocalDate tanggalKembali) {
         this.tanggalKembali = tanggalKembali;
     }
 
@@ -56,6 +61,10 @@ public class DataPeminjaman implements Peminjaman {
     @Override
     public void pinjamBuku() {
 
+        if (bukuPinjam != null) {
+            bukuPinjam.kurangiStok();
+        }
+        status = true;
         System.out.println("Buku berhasil dipinjam");
 
     }
@@ -63,6 +72,10 @@ public class DataPeminjaman implements Peminjaman {
     @Override
     public void kembalikanBuku() {
 
+        if (bukuPinjam != null) {
+            bukuPinjam.tambahStok();
+        }
+        status = false;
         System.out.println("Buku berhasil dikembalikan");
 
     }
@@ -76,5 +89,27 @@ public class DataPeminjaman implements Peminjaman {
             System.out.println("Buku tersedia");
         }
 
+    }
+
+    @Override
+    public void bukuPinjam(Buku buku) {
+        this.bukuPinjam = buku;
+        pinjamBuku();
+    }
+
+    @Override
+    public void bukuKembalikan(Buku buku) {
+        this.bukuPinjam = buku;
+        kembalikanBuku();
+    }
+
+    @Override
+    public long hitungDenda() {
+        if (tanggalKembali == null) {
+            return 0;
+        }
+
+        long hariTerlambat = ChronoUnit.DAYS.between(tanggalKembali, LocalDate.now());
+        return Math.max(0, hariTerlambat) * DENDA_PER_HARI;
     }
 }

@@ -1,4 +1,4 @@
-package config;
+    package config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ public class Koneksi {
     public static Connection getConnection() {
         if (koneksi == null) {
             try {
-                String url = "jdbc:mysql://localhost/perpustakaan";
+                String url = "jdbc:mysql://localhost:3306/perpustakaan";
                 String user = "root";
                 String password = "";
 

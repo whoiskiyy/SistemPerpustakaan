@@ -8,4 +8,10 @@ public interface Peminjaman {
 
     void cekStatus();
 
+    void bukuPinjam(Buku buku);
+
+    void bukuKembalikan(Buku buku);
+
+    long hitungDenda();
+
 }
