@@ -4,6 +4,8 @@
  */
 package sistemperpustakaan.view;
 import config.Koneksi;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sistemperpustakaan.view.MenuUtama;
 /**
@@ -30,12 +34,40 @@ public class PeminjamanView extends javax.swing.JFrame {
      */
     public PeminjamanView() {
     initComponents();
+    warnaStatusTerlambat();
     tampilData();
     loadAnggota();
     loadBuku();
     setLocationRelativeTo(null);
     setTitle("Data Peminjaman");
 }
+
+private void warnaStatusTerlambat() {
+    tblPeminjaman.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            Component component = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            String status = table.getValueAt(row, 5).toString();
+            if ("Terlambat".equalsIgnoreCase(status)) {
+                component.setBackground(new Color(255, 204, 204));
+                component.setForeground(Color.RED.darker());
+            } else if (isSelected) {
+                component.setBackground(table.getSelectionBackground());
+                component.setForeground(table.getSelectionForeground());
+            } else {
+                component.setBackground(table.getBackground());
+                component.setForeground(table.getForeground());
+            }
+
+            return component;
+        }
+    });
+}
+
     public void tampilData() {
 
     DefaultTableModel model = new DefaultTableModel();
