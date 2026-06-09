@@ -25,32 +25,37 @@ public class AnggotaFiturView extends javax.swing.JFrame {
     private void initComponents() {
 
         btnKembali = new javax.swing.JButton();
+        btnPinjam = new javax.swing.JButton();
+        btnUlasan = new javax.swing.JButton();
         lblJudul = new javax.swing.JLabel();
         lblNomor = new javax.swing.JLabel();
         lblNama = new javax.swing.JLabel();
         lblAlamat = new javax.swing.JLabel();
         lblTelepon = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         cmbBuku = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
         txtTanggalPinjam = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         txtTanggalKembali = new javax.swing.JTextField();
-        btnPinjam = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRiwayat = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtUlasan = new javax.swing.JTextArea();
-        btnUlasan = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblUlasan = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnKembali.setText("KEMBALI");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
+
+        btnPinjam.setText("PINJAM BUKU");
+        btnPinjam.addActionListener(this::btnPinjamActionPerformed);
+
+        btnUlasan.setText("KIRIM ULASAN");
+        btnUlasan.addActionListener(this::btnUlasanActionPerformed);
 
         lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -64,45 +69,118 @@ public class AnggotaFiturView extends javax.swing.JFrame {
 
         lblTelepon.setText("Telepon: -");
 
-        btnPinjam.setText("PINJAM BUKU");
-        btnPinjam.addActionListener(this::btnPinjamActionPerformed);
+        jLabel1.setText("Pilih Buku");
+
+        jLabel2.setText("Tanggal Pinjam (yyyy-MM-dd)");
+
+        jLabel3.setText("Tanggal Kembali (yyyy-MM-dd)");
 
         jScrollPane1.setViewportView(tblRiwayat);
+
+        jLabel4.setText("Tulis Ulasan");
 
         txtUlasan.setColumns(20);
         txtUlasan.setRows(4);
         jScrollPane2.setViewportView(txtUlasan);
 
-        btnUlasan.setText("KIRIM ULASAN");
-        btnUlasan.addActionListener(this::btnUlasanActionPerformed);
-
         jScrollPane3.setViewportView(tblUlasan);
 
-        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
-        getContentPane().add(btnPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
-        getContentPane().add(btnUlasan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 44));
-        getContentPane().add(lblJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 18, 620, 28));
-        getContentPane().add(lblNomor, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 58, 260, -1));
-        getContentPane().add(lblNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 84, 260, -1));
-        getContentPane().add(lblAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 260, -1));
-        getContentPane().add(lblTelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 136, 260, -1));
-        jLabel1.setText("Pilih Buku");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 52, 120, -1));
-        getContentPane().add(cmbBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 75, 340, -1));
-        jLabel2.setText("Tanggal Pinjam (yyyy-MM-dd)");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 170, -1));
-        getContentPane().add(txtTanggalPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 133, 160, -1));
-        jLabel3.setText("Tanggal Kembali (yyyy-MM-dd)");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, 180, -1));
-        getContentPane().add(txtTanggalKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 133, 160, -1));
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 175, 660, 150));
-        jLabel4.setText("Tulis Ulasan");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 326, 120, -1));
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 345, 660, 70));
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 435, 660, 130));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnUlasan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTanggalKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblNomor)
+                        .addGap(10, 10, 10)
+                        .addComponent(lblNama))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(7, 7, 7)
+                        .addComponent(cmbBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUlasan, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAlamat)
+                        .addGap(10, 10, 10)
+                        .addComponent(lblTelepon))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtTanggalKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel4)
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
-        setSize(new java.awt.Dimension(900, 640));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tampilProfil() {

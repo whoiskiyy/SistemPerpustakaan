@@ -25,26 +25,20 @@ public class PetugasShiftView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblJudul = new javax.swing.JLabel();
-        lblInfo = new javax.swing.JLabel();
-        cmbShift = new javax.swing.JComboBox<>();
+        btnKembali = new javax.swing.JButton();
         btnTampilkan = new javax.swing.JButton();
         btnUbahShift = new javax.swing.JButton();
         btnJadikanAktif = new javax.swing.JButton();
-        btnKembali = new javax.swing.JButton();
+        lblJudul = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
+        cmbShift = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPetugas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblJudul.setText("PETUGAS SHIFT KERJA");
-
-        lblInfo.setText("Login: -");
-
-        cmbShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Pagi", "Siang", "Malam" }));
+        btnKembali.setText("KEMBALI");
+        btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         btnTampilkan.setText("TAMPILKAN");
         btnTampilkan.addActionListener(this::btnTampilkanActionPerformed);
@@ -55,8 +49,14 @@ public class PetugasShiftView extends javax.swing.JFrame {
         btnJadikanAktif.setText("JADIKAN SEDANG BEKERJA");
         btnJadikanAktif.addActionListener(this::btnJadikanAktifActionPerformed);
 
-        btnKembali.setText("KEMBALI");
-        btnKembali.addActionListener(this::btnKembaliActionPerformed);
+        lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJudul.setText("PETUGAS SHIFT KERJA");
+
+        lblInfo.setText("Login: -");
+
+        cmbShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Pagi", "Siang", "Malam" }));
+        cmbShift.addActionListener(this::cmbShiftActionPerformed);
 
         tblPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -65,18 +65,61 @@ public class PetugasShiftView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPetugas);
 
-        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 32));
-        getContentPane().add(btnTampilkan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, 32));
-        getContentPane().add(btnUbahShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 170, 32));
-        getContentPane().add(btnJadikanAktif, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 170, 44));
-        getContentPane().add(lblJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 560, 28));
-        getContentPane().add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 260, -1));
-        getContentPane().add(cmbShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 58, 160, -1));
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 600, 330));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTampilkan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUbahShift, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnJadikanAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(btnTampilkan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(lblInfo))
+                    .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnUbahShift, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(btnJadikanAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         pack();
-        setSize(new java.awt.Dimension(830, 510));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbShiftActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbShiftActionPerformed
 
     private void tampilData() {
         DefaultTableModel model = new DefaultTableModel();

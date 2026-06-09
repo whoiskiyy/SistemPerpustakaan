@@ -21,17 +21,19 @@ public class LaporanView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnKembali = new javax.swing.JButton();
         lblTotalBuku = new javax.swing.JLabel();
         lblTotalAnggota = new javax.swing.JLabel();
         lblTotalPeminjaman = new javax.swing.JLabel();
         lblDipinjam = new javax.swing.JLabel();
         lblDikembalikan = new javax.swing.JLabel();
-        btnKembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLaporan = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnKembali.setText("KEMBALI");
+        btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         lblTotalBuku.setText("Total Buku: 0");
 
@@ -43,21 +45,51 @@ public class LaporanView extends javax.swing.JFrame {
 
         lblDikembalikan.setText("Dikembalikan: 0");
 
-        btnKembali.setText("KEMBALI");
-        btnKembali.addActionListener(this::btnKembaliActionPerformed);
-
         jScrollPane1.setViewportView(tblLaporan);
 
-        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
-        getContentPane().add(lblTotalBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 170, -1));
-        getContentPane().add(lblTotalAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 24, 180, -1));
-        getContentPane().add(lblTotalPeminjaman, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 24, 190, -1));
-        getContentPane().add(lblDipinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 58, 170, -1));
-        getContentPane().add(lblDikembalikan, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 58, 180, -1));
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 650, 330));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(lblTotalBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(lblTotalAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblTotalPeminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(220, 220, 220)
+                .addComponent(lblDipinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(lblDikembalikan, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotalBuku)
+                            .addComponent(lblTotalAnggota)
+                            .addComponent(lblTotalPeminjaman))))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDipinjam)
+                    .addComponent(lblDikembalikan))
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
-        setSize(new java.awt.Dimension(880, 510));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tampilLaporan() {
