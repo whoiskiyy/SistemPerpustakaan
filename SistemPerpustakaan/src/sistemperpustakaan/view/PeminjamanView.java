@@ -51,7 +51,12 @@ private void warnaStatusTerlambat() {
             Component component = super.getTableCellRendererComponent(
                     table, value, isSelected, hasFocus, row, column);
 
-            String status = table.getValueAt(row, 5).toString();
+            if (table.getColumnCount() <= 5) {
+                return component;
+            }
+
+            Object statusValue = table.getValueAt(row, 5);
+            String status = statusValue == null ? "" : statusValue.toString();
             if ("Terlambat".equalsIgnoreCase(status)) {
                 component.setBackground(new Color(255, 204, 204));
                 component.setForeground(Color.RED.darker());

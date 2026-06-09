@@ -138,17 +138,17 @@ public class PetugasShiftView extends javax.swing.JFrame {
     }
 
     private ResultSet ambilDataPetugas(Connection conn, String shift) throws Exception {
-        String[] sqlList = {
-            "SELECT nip, nama, shift_kerja FROM pustakawan",
-            "SELECT nip, nama, shiftKerja AS shift_kerja FROM pustakawan",
-            "SELECT nip, username AS nama, shift_kerja FROM user"
+        String[][] sqlList = {
+            {"SELECT nip, nama, shift_kerja FROM pustakawan", "shift_kerja"},
+            {"SELECT nip, nama, shiftKerja AS shift_kerja FROM pustakawan", "shiftKerja"},
+            {"SELECT nip, username AS nama, shift_kerja FROM user", "shift_kerja"}
         };
 
-        for (String sqlDasar : sqlList) {
+        for (String[] query : sqlList) {
             try {
-                String sql = sqlDasar;
+                String sql = query[0];
                 if (!"Semua".equals(shift)) {
-                    sql += " WHERE shift_kerja=?";
+                    sql += " WHERE " + query[1] + "=?";
                 }
 
                 PreparedStatement pst = conn.prepareStatement(sql);

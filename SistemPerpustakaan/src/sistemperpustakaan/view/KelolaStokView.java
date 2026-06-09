@@ -2,6 +2,7 @@ package sistemperpustakaan.view;
 
 import config.Koneksi;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ public class KelolaStokView extends javax.swing.JFrame {
 
     public KelolaStokView() {
         initComponents();
+        pastikanKolomBuku();
         tampilData();
         setLocationRelativeTo(null);
         setTitle("Kelola Stok Buku");
@@ -105,6 +107,22 @@ public class KelolaStokView extends javax.swing.JFrame {
             }
 
             tblBuku.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void pastikanKolomBuku() {
+        try {
+            Connection conn = Koneksi.getConnection();
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet rs = metaData.getColumns(null, null, "buku", "genre");
+
+            if (!rs.next()) {
+                String sql = "ALTER TABLE buku ADD COLUMN genre VARCHAR(50)";
+                PreparedStatement pst = conn.prepareStatement(sql);
+                pst.executeUpdate();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
