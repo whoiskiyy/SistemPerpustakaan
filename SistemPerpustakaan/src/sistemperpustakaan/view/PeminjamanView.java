@@ -3,20 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sistemperpustakaan.view;
-import config.Koneksi;
 import java.awt.Color;
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.PeminjamanController;
 import sistemperpustakaan.view.MenuUtama;
 /**
  *
@@ -24,16 +17,16 @@ import sistemperpustakaan.view.MenuUtama;
  */
 public class PeminjamanView extends javax.swing.JFrame {
     String id;
-    private static final int DENDA_PER_HARI = 1000;
-    private static final DateTimeFormatter FORMAT_TANGGAL = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final PeminjamanController controller = new PeminjamanController();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PeminjamanView.class.getName());
 
     /**
      * Creates new form PeminjamanView
      */
-    public PeminjamanView() {
+public PeminjamanView() {
     initComponents();
+    terapkanWarna();
     warnaStatusTerlambat();
     tampilData();
     loadAnggota();
@@ -58,8 +51,8 @@ private void warnaStatusTerlambat() {
             Object statusValue = table.getValueAt(row, 5);
             String status = statusValue == null ? "" : statusValue.toString();
             if ("Terlambat".equalsIgnoreCase(status)) {
-                component.setBackground(new Color(255, 204, 204));
-                component.setForeground(Color.RED.darker());
+                component.setBackground(new Color(95, 63, 67));
+                component.setForeground(new Color(255, 205, 210));
             } else if (isSelected) {
                 component.setBackground(table.getSelectionBackground());
                 component.setForeground(table.getSelectionForeground());
@@ -74,65 +67,17 @@ private void warnaStatusTerlambat() {
 }
 
     public void tampilData() {
-
-    DefaultTableModel model = new DefaultTableModel();
-
-    model.addColumn("ID");
-    model.addColumn("Nama Anggota");
-    model.addColumn("Judul Buku");
-    model.addColumn("Tanggal Pinjam");
-    model.addColumn("Tanggal Kembali");
-    model.addColumn("Status");
-    model.addColumn("Denda");
-
     try {
-
-        Connection conn = Koneksi.getConnection();
-
-        String sql = "SELECT * FROM peminjaman";
-
-        PreparedStatement pst = conn.prepareStatement(sql);
-
-        ResultSet rs = pst.executeQuery();
-
-        while (rs.next()) {
-
-            model.addRow(new Object[] {
-                rs.getString("id_pinjam"),
-                rs.getString("nama_anggota"),
-                rs.getString("judul_buku"),
-                rs.getString("tanggal_pinjam"),
-                rs.getString("tanggal_kembali"),
-                rs.getString("status"),
-                hitungDenda(rs.getString("tanggal_kembali"), rs.getString("status"))
-            });
-
-        }
-
-        tblPeminjaman.setModel(model);
-
+        tblPeminjaman.setModel(controller.tampilData());
     } catch (Exception e) {
-
         JOptionPane.showMessageDialog(this,
                 e.getMessage());
-
     }
-
 }
 
     private void loadAnggota() {
     try {
-        Connection conn = Koneksi.getConnection();
-        String sql = "SELECT nama FROM anggota";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-
-        cmbNamaAnggota.removeAllItems();
-        cmbNamaAnggota.addItem("Pilih Anggota");
-
-        while (rs.next()) {
-            cmbNamaAnggota.addItem(rs.getString("nama"));
-        }
+        cmbNamaAnggota.setModel(controller.loadAnggota());
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
@@ -140,17 +85,7 @@ private void warnaStatusTerlambat() {
 
 private void loadBuku() {
     try {
-        Connection conn = Koneksi.getConnection();
-        String sql = "SELECT judul FROM buku";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-
-        cmbJudulBuku.removeAllItems();
-        cmbJudulBuku.addItem("Pilih Buku");
-
-        while (rs.next()) {
-            cmbJudulBuku.addItem(rs.getString("judul"));
-        }
+        cmbJudulBuku.setModel(controller.loadBuku());
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
@@ -168,13 +103,10 @@ private boolean inputValid() {
     }
 
     try {
-        LocalDate tanggalPinjam = LocalDate.parse(txtTanggalPinjam.getText().trim(), FORMAT_TANGGAL);
-        LocalDate tanggalKembali = LocalDate.parse(txtTanggalKembali.getText().trim(), FORMAT_TANGGAL);
-
-        if (tanggalKembali.isBefore(tanggalPinjam)) {
-            JOptionPane.showMessageDialog(this, "Tanggal kembali tidak boleh sebelum tanggal pinjam");
-            return false;
-        }
+        controller.validasiTanggal(txtTanggalPinjam.getText(), txtTanggalKembali.getText());
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+        return false;
     } catch (DateTimeParseException e) {
         JOptionPane.showMessageDialog(this, "Format tanggal harus yyyy-MM-dd, contoh: 2026-06-08");
         return false;
@@ -183,47 +115,41 @@ private boolean inputValid() {
     return true;
 }
 
-private long hitungDenda(String tanggalKembali, String status) {
-    if (!"Terlambat".equalsIgnoreCase(status) && !"Dipinjam".equalsIgnoreCase(status)) {
-        return 0;
+private void terapkanWarna() {
+    java.awt.Color background = new java.awt.Color(55, 57, 62);
+    java.awt.Color panel = new java.awt.Color(68, 71, 78);
+    java.awt.Color button = new java.awt.Color(88, 92, 100);
+    java.awt.Color border = new java.awt.Color(105, 109, 118);
+    java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+    getContentPane().setBackground(background);
+    for (javax.swing.JButton tombol : new javax.swing.JButton[]{btnKembali, btnSimpan, btnEdit, btnHapus, btnReset}) {
+        tombol.setBackground(button);
+        tombol.setForeground(text);
+        tombol.setFocusPainted(false);
     }
-
-    try {
-        LocalDate batasKembali = LocalDate.parse(tanggalKembali, FORMAT_TANGGAL);
-        long hariTerlambat = ChronoUnit.DAYS.between(batasKembali, LocalDate.now());
-        return Math.max(0, hariTerlambat) * DENDA_PER_HARI;
-    } catch (DateTimeParseException e) {
-        return 0;
+    for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3, jLabel4, jLabel5}) {
+        label.setForeground(text);
     }
-}
-
-private boolean statusDipinjam(String status) {
-    return "Dipinjam".equalsIgnoreCase(status) || "Terlambat".equalsIgnoreCase(status);
-}
-
-private int getStokBuku(Connection conn, String judulBuku) throws Exception {
-    String sql = "SELECT stok FROM buku WHERE judul = ?";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    pst.setString(1, judulBuku);
-    ResultSet rs = pst.executeQuery();
-
-    if (rs.next()) {
-        return rs.getInt("stok");
+    for (javax.swing.JTextField field : new javax.swing.JTextField[]{txtTanggalPinjam, txtTanggalKembali}) {
+        field.setBackground(panel);
+        field.setForeground(text);
+        field.setCaretColor(text);
+        field.setBorder(javax.swing.BorderFactory.createLineBorder(border));
     }
-
-    throw new Exception("Buku tidak ditemukan");
-}
-
-private void ubahStokBuku(Connection conn, String judulBuku, int perubahan) throws Exception {
-    if (perubahan < 0 && getStokBuku(conn, judulBuku) <= 0) {
-        throw new Exception("Stok buku habis");
+    for (javax.swing.JComboBox<?> combo : new javax.swing.JComboBox<?>[]{cmbNamaAnggota, cmbJudulBuku, cmbStatus}) {
+        combo.setBackground(panel);
+        combo.setForeground(text);
     }
-
-    String sql = "UPDATE buku SET stok = stok + ? WHERE judul = ?";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    pst.setInt(1, perubahan);
-    pst.setString(2, judulBuku);
-    pst.executeUpdate();
+    tblPeminjaman.setBackground(panel);
+    tblPeminjaman.setForeground(text);
+    tblPeminjaman.setGridColor(border);
+    tblPeminjaman.setSelectionBackground(new java.awt.Color(82, 107, 150));
+    tblPeminjaman.setSelectionForeground(text);
+    tblPeminjaman.getTableHeader().setBackground(button);
+    tblPeminjaman.getTableHeader().setForeground(text);
+    jScrollPane1.getViewport().setBackground(panel);
+    jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -253,6 +179,7 @@ private void ubahStokBuku(Connection conn, String judulBuku, int perubahan) thro
         cmbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nama Anggota");
@@ -309,79 +236,26 @@ private void ubahStokBuku(Connection conn, String judulBuku, int perubahan) thro
 
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dipinjam", "Dikembalikan", "Terlambat" }));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtTanggalKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbNamaAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbJudulBuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnKembali)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSimpan)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnEdit)
-                                .addGap(29, 29, 29)
-                                .addComponent(btnHapus)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnReset))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(btnKembali)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtTanggalPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTanggalKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnEdit)
-                    .addComponent(btnHapus)
-                    .addComponent(btnReset))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
+        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
+        getContentPane().add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 32));
+        getContentPane().add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 150, 32));
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 32));
+
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 110, -1));
+        getContentPane().add(cmbNamaAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 210, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 24, 90, -1));
+        getContentPane().add(cmbJudulBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 190, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 110, -1));
+        getContentPane().add(txtTanggalPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 58, 210, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 62, 120, -1));
+        getContentPane().add(txtTanggalKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 58, 170, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 110, -1));
+        getContentPane().add(cmbStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 96, 210, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 700, 330));
 
         pack();
+        setSize(new java.awt.Dimension(930, 550));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
@@ -389,29 +263,14 @@ if (!inputValid()) {
     return;
 }
         try {
-
-    Connection conn = Koneksi.getConnection();
     String judulBuku = cmbJudulBuku.getSelectedItem().toString();
     String status = cmbStatus.getSelectedItem().toString();
 
-    conn.setAutoCommit(false);
-
-    if (statusDipinjam(status)) {
-        ubahStokBuku(conn, judulBuku, -1);
-    }
-
-    String sql = "INSERT INTO peminjaman(nama_anggota, judul_buku, tanggal_pinjam, tanggal_kembali, status) VALUES (?, ?, ?, ?, ?)";
-
-    PreparedStatement pst = conn.prepareStatement(sql);
-
-    pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
-    pst.setString(2, judulBuku);
-    pst.setString(3, txtTanggalPinjam.getText().trim());
-    pst.setString(4, txtTanggalKembali.getText().trim());
-    pst.setString(5, status);
-
-    pst.executeUpdate();
-    conn.commit();
+    controller.simpan((String) cmbNamaAnggota.getSelectedItem(),
+            judulBuku,
+            txtTanggalPinjam.getText().trim(),
+            txtTanggalKembali.getText().trim(),
+            status);
 
     JOptionPane.showMessageDialog(this,
             "Data Peminjaman Berhasil Disimpan");
@@ -421,21 +280,9 @@ if (!inputValid()) {
 
 } catch (Exception e) {
 
-    try {
-        Koneksi.getConnection().rollback();
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    }
-
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
-} finally {
-    try {
-        Koneksi.getConnection().setAutoCommit(true);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -462,46 +309,15 @@ if (!inputValid()) {
 }
 
 try {
-
-    Connection conn = Koneksi.getConnection();
-    conn.setAutoCommit(false);
-
-    String judulLama = "";
-    String statusLama = "";
-    String sqlLama = "SELECT judul_buku, status FROM peminjaman WHERE id_pinjam=?";
-    PreparedStatement pstLama = conn.prepareStatement(sqlLama);
-    pstLama.setString(1, id);
-    ResultSet rsLama = pstLama.executeQuery();
-
-    if (rsLama.next()) {
-        judulLama = rsLama.getString("judul_buku");
-        statusLama = rsLama.getString("status");
-    }
-
     String judulBaru = cmbJudulBuku.getSelectedItem().toString();
     String statusBaru = cmbStatus.getSelectedItem().toString();
 
-    if (statusDipinjam(statusLama)) {
-        ubahStokBuku(conn, judulLama, 1);
-    }
-
-    if (statusDipinjam(statusBaru)) {
-        ubahStokBuku(conn, judulBaru, -1);
-    }
-
-    String sql = "UPDATE peminjaman SET nama_anggota=?, judul_buku=?, tanggal_pinjam=?, tanggal_kembali=?, status=? WHERE id_pinjam=?";
-
-    PreparedStatement pst = conn.prepareStatement(sql);
-
-    pst.setString(1, (String) cmbNamaAnggota.getSelectedItem());
-    pst.setString(2, judulBaru);
-    pst.setString(3, txtTanggalPinjam.getText().trim());
-    pst.setString(4, txtTanggalKembali.getText().trim());
-    pst.setString(5, statusBaru);
-    pst.setString(6, id);
-
-    pst.executeUpdate();
-    conn.commit();
+    controller.edit(id,
+            (String) cmbNamaAnggota.getSelectedItem(),
+            judulBaru,
+            txtTanggalPinjam.getText().trim(),
+            txtTanggalKembali.getText().trim(),
+            statusBaru);
 
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Diubah");
@@ -511,21 +327,9 @@ try {
 
 } catch (Exception e) {
 
-    try {
-        Koneksi.getConnection().rollback();
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    }
-
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
-} finally {
-    try {
-        Koneksi.getConnection().setAutoCommit(true);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -537,35 +341,7 @@ int pilih = JOptionPane.showConfirmDialog(this,
 
 if (pilih == JOptionPane.YES_OPTION) {
         try {
-
-    Connection conn = Koneksi.getConnection();
-    conn.setAutoCommit(false);
-
-    String judulLama = "";
-    String statusLama = "";
-    String sqlLama = "SELECT judul_buku, status FROM peminjaman WHERE id_pinjam=?";
-    PreparedStatement pstLama = conn.prepareStatement(sqlLama);
-    pstLama.setString(1, id);
-    ResultSet rsLama = pstLama.executeQuery();
-
-    if (rsLama.next()) {
-        judulLama = rsLama.getString("judul_buku");
-        statusLama = rsLama.getString("status");
-    }
-
-    String sql = "DELETE FROM peminjaman WHERE id_pinjam=?";
-
-    PreparedStatement pst = conn.prepareStatement(sql);
-
-    pst.setString(1, id);
-
-    pst.executeUpdate();
-
-    if (statusDipinjam(statusLama)) {
-        ubahStokBuku(conn, judulLama, 1);
-    }
-
-    conn.commit();
+    controller.hapus(id);
 
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Dihapus");
@@ -575,21 +351,9 @@ if (pilih == JOptionPane.YES_OPTION) {
 
 } catch (Exception e) {
 
-    try {
-        Koneksi.getConnection().rollback();
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    }
-
     JOptionPane.showMessageDialog(this,
             e.getMessage());
 
-} finally {
-    try {
-        Koneksi.getConnection().setAutoCommit(true);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
-    }
 }        // TODO add your handling code here:
     }//GEN-LAST:event_btnHapusActionPerformed
     }

@@ -4,13 +4,8 @@
  */
 package sistemperpustakaan.view;
 
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.BukuController;
 
 /**
  *
@@ -20,6 +15,7 @@ public class BukuView extends javax.swing.JFrame {
     String id;
     private boolean modeAnggota = false;
     private String namaAnggota = "";
+    private final BukuController controller = new BukuController();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BukuView.class.getName());
 
@@ -28,6 +24,7 @@ public class BukuView extends javax.swing.JFrame {
      */
     public BukuView() {
         initComponents();
+        terapkanWarna();
         pastikanKolomBuku();
         tampilData();
         setLocationRelativeTo(null);
@@ -40,90 +37,43 @@ public class BukuView extends javax.swing.JFrame {
         this.namaAnggota = namaAnggota;
 
         if (modeAnggota) {
-            btnSimpan.setVisible(false);
-            btnEdit.setVisible(false);
-            btnHapus.setVisible(false);
-            btnReset.setVisible(false);
+            aturModeAnggota();
+            tampilBukuTersedia();
             setTitle("Daftar Buku");
         }
     }
 
     public void tampilData() {
-        DefaultTableModel model = buatModelTabel();
-
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT id_buku, judul, penulis, genre, stok FROM buku";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("id_buku"),
-                    rs.getString("judul"),
-                    rs.getString("penulis"),
-                    rs.getString("genre"),
-                    rs.getString("stok")
-                });
-            }
-
-            tblBuku.setModel(model);
+            tblBuku.setModel(controller.tampilData());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
     public void cariData() {
-        DefaultTableModel model = buatModelTabel();
-
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT id_buku, judul, penulis, genre, stok FROM buku "
-                    + "WHERE judul LIKE ? OR penulis LIKE ? OR genre LIKE ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            String kataKunci = "%" + txtCari.getText().trim() + "%";
-            pst.setString(1, kataKunci);
-            pst.setString(2, kataKunci);
-            pst.setString(3, kataKunci);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("id_buku"),
-                    rs.getString("judul"),
-                    rs.getString("penulis"),
-                    rs.getString("genre"),
-                    rs.getString("stok")
-                });
+            if (modeAnggota) {
+                tblBuku.setModel(controller.cariBukuTersedia(txtCari.getText()));
+            } else {
+                tblBuku.setModel(controller.cariData(txtCari.getText()));
             }
-
-            tblBuku.setModel(model);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    private DefaultTableModel buatModelTabel() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID Buku");
-        model.addColumn("Judul");
-        model.addColumn("Penulis");
-        model.addColumn("Genre");
-        model.addColumn("Stok");
-        return model;
+    public void tampilBukuTersedia() {
+        try {
+            tblBuku.setModel(controller.tampilBukuTersedia());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 
     private void pastikanKolomBuku() {
         try {
-            Connection conn = Koneksi.getConnection();
-            DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet rs = metaData.getColumns(null, null, "buku", "genre");
-
-            if (!rs.next()) {
-                String sql = "ALTER TABLE buku ADD COLUMN genre VARCHAR(50)";
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.executeUpdate();
-            }
+            controller.pastikanKolomBuku();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -162,6 +112,68 @@ public class BukuView extends javax.swing.JFrame {
         id = null;
     }
 
+    private void aturModeAnggota() {
+        btnSimpan.setVisible(false);
+        btnEdit.setVisible(false);
+        btnHapus.setVisible(false);
+        btnReset.setVisible(false);
+
+        jLabel1.setVisible(false);
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        txtIdBuku.setVisible(false);
+        txtJudul.setVisible(false);
+        txtPenulis.setVisible(false);
+        cmbGenre.setVisible(false);
+        txtStok.setVisible(false);
+
+        getContentPane().remove(jLabel6);
+        getContentPane().remove(txtCari);
+        getContentPane().remove(jScrollPane1);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 34, 90, -1));
+        getContentPane().add(txtCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 420, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 630, 380));
+        revalidate();
+        repaint();
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        for (javax.swing.JButton tombol : new javax.swing.JButton[]{btnKembali, btnSimpan, btnEdit, btnHapus, btnReset}) {
+            tombol.setBackground(button);
+            tombol.setForeground(text);
+            tombol.setFocusPainted(false);
+        }
+        for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6}) {
+            label.setForeground(text);
+        }
+        for (javax.swing.JTextField field : new javax.swing.JTextField[]{txtIdBuku, txtJudul, txtPenulis, txtStok, txtCari}) {
+            field.setBackground(panel);
+            field.setForeground(text);
+            field.setCaretColor(text);
+            field.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+        }
+        cmbGenre.setBackground(panel);
+        cmbGenre.setForeground(text);
+        tblBuku.setBackground(panel);
+        tblBuku.setForeground(text);
+        tblBuku.setGridColor(border);
+        tblBuku.setSelectionBackground(new java.awt.Color(82, 107, 150));
+        tblBuku.setSelectionForeground(text);
+        tblBuku.getTableHeader().setBackground(button);
+        tblBuku.getTableHeader().setForeground(text);
+        jScrollPane1.getViewport().setBackground(panel);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,6 +199,7 @@ public class BukuView extends javax.swing.JFrame {
         txtCari = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtJudul.addActionListener(this::txtJudulActionPerformed);
 
@@ -250,103 +263,31 @@ public class BukuView extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addComponent(btnKembali))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20)
-                .addComponent(txtIdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel2)
-                .addGap(37, 37, 37)
-                .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel3)
-                .addGap(26, 26, 26)
-                .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel4)
-                .addGap(33, 33, 33)
-                .addComponent(cmbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel5)
-                .addGap(41, 41, 41)
-                .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel6)
-                .addGap(11, 11, 11)
-                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btnSimpan)
-                .addGap(35, 35, 35)
-                .addComponent(btnEdit)
-                .addGap(30, 30, 30)
-                .addComponent(btnHapus)
-                .addGap(36, 36, 36)
-                .addComponent(btnReset))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnKembali)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addComponent(txtIdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel2))
-                    .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3))
-                    .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel4))
-                    .addComponent(cmbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel5))
-                    .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnEdit)
-                    .addComponent(btnHapus)
-                    .addComponent(btnReset))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
+        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
+        getContentPane().add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 32));
+        getContentPane().add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 150, 32));
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 32));
+
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 80, -1));
+        getContentPane().add(txtIdBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 180, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 24, 70, -1));
+        getContentPane().add(txtJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 220, -1));
+
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 80, -1));
+        getContentPane().add(txtPenulis, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 58, 180, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 62, 70, -1));
+        getContentPane().add(cmbGenre, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 58, 220, -1));
+
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 80, -1));
+        getContentPane().add(txtStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 96, 180, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 70, -1));
+        getContentPane().add(txtCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 96, 220, -1));
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 630, 320));
 
         pack();
+        setSize(new java.awt.Dimension(860, 540));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenreActionPerformed
@@ -366,12 +307,7 @@ public class BukuView extends javax.swing.JFrame {
 
         if (pilih == JOptionPane.YES_OPTION) {
             try {
-                Connection conn = Koneksi.getConnection();
-                String sql = "DELETE FROM buku WHERE id_buku=?";
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, id);
-                pst.executeUpdate();
-
+                controller.hapus(id);
                 JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
                 resetForm();
                 tampilData();
@@ -395,16 +331,11 @@ public class BukuView extends javax.swing.JFrame {
         }
 
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "INSERT INTO buku(id_buku, judul, penulis, genre, stok) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, txtIdBuku.getText().trim());
-            pst.setString(2, txtJudul.getText().trim());
-            pst.setString(3, txtPenulis.getText().trim());
-            pst.setString(4, cmbGenre.getSelectedItem().toString());
-            pst.setInt(5, Integer.parseInt(txtStok.getText().trim()));
-            pst.executeUpdate();
-
+            controller.simpan(txtIdBuku.getText().trim(),
+                    txtJudul.getText().trim(),
+                    txtPenulis.getText().trim(),
+                    cmbGenre.getSelectedItem().toString(),
+                    Integer.parseInt(txtStok.getText().trim()));
             JOptionPane.showMessageDialog(this, "Data Buku Berhasil Disimpan");
             resetForm();
             tampilData();
@@ -414,6 +345,10 @@ public class BukuView extends javax.swing.JFrame {
     }
 
     private void tblBukuMouseClicked(java.awt.event.MouseEvent evt) {
+        if (modeAnggota) {
+            return;
+        }
+
         int baris = tblBuku.getSelectedRow();
         id = tblBuku.getValueAt(baris, 0).toString();
 
@@ -435,17 +370,12 @@ public class BukuView extends javax.swing.JFrame {
         }
 
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "UPDATE buku SET id_buku=?, judul=?, penulis=?, genre=?, stok=? WHERE id_buku=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, txtIdBuku.getText().trim());
-            pst.setString(2, txtJudul.getText().trim());
-            pst.setString(3, txtPenulis.getText().trim());
-            pst.setString(4, cmbGenre.getSelectedItem().toString());
-            pst.setInt(5, Integer.parseInt(txtStok.getText().trim()));
-            pst.setString(6, id);
-            pst.executeUpdate();
-
+            controller.edit(id,
+                    txtIdBuku.getText().trim(),
+                    txtJudul.getText().trim(),
+                    txtPenulis.getText().trim(),
+                    cmbGenre.getSelectedItem().toString(),
+                    Integer.parseInt(txtStok.getText().trim()));
             JOptionPane.showMessageDialog(this, "Data Berhasil Diubah");
             resetForm();
             tampilData();

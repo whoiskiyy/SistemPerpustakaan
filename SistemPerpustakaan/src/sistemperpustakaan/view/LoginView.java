@@ -3,18 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package sistemperpustakaan.view;
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import sistemperpustakaan.FlatLafSetup;
+import sistemperpustakaan.controller.LoginController;
 
 /**
  *
  * @author rizky
  */
 public class LoginView extends javax.swing.JFrame {
+    private final LoginController controller = new LoginController();
     
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginView.class.getName());
@@ -24,8 +22,35 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
+        terapkanWarna();
         setLocationRelativeTo(null);
         setTitle("Login Perpustakaan");
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3}) {
+            label.setForeground(text);
+        }
+        txtUsername.setBackground(panel);
+        txtUsername.setForeground(text);
+        txtUsername.setCaretColor(text);
+        txtUsername.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+        txtPassword.setBackground(panel);
+        txtPassword.setForeground(text);
+        txtPassword.setCaretColor(text);
+        txtPassword.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+        cmbRole.setBackground(panel);
+        cmbRole.setForeground(text);
+        jButton1.setBackground(button);
+        jButton1.setForeground(text);
+        jButton1.setFocusPainted(false);
     }
 
     /**
@@ -132,14 +157,7 @@ public class LoginView extends javax.swing.JFrame {
             return;
         }
 
-        Connection conn = Koneksi.getConnection();
-        String nama;
-
-        if ("Pustakawan".equals(role)) {
-            nama = loginPustakawan(conn, username, password);
-        } else {
-            nama = loginAnggota(conn, username, password);
-        }
+        String nama = controller.login(username, password, role);
 
         if (nama != null) {
     JOptionPane.showMessageDialog(this,
@@ -169,47 +187,6 @@ public class LoginView extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private String loginPustakawan(Connection conn, String username, String password) {
-        String[] sqlList = {
-            "SELECT nama FROM pustakawan WHERE username=? AND password=?",
-            "SELECT nama FROM pustakawan WHERE email=? AND password=?",
-            "SELECT username AS nama FROM user WHERE username=? AND password=? AND role='pustakawan'",
-            "SELECT username AS nama FROM user WHERE username=? AND password=?"
-        };
-
-        return cariUser(conn, sqlList, username, password);
-    }
-
-    private String loginAnggota(Connection conn, String username, String password) {
-        String[] sqlList = {
-            "SELECT nama FROM anggota WHERE username=? AND password=?",
-            "SELECT nama FROM anggota WHERE email=? AND password=?",
-            "SELECT nama FROM anggota WHERE nama=? AND no_hp=?",
-            "SELECT username AS nama FROM user WHERE username=? AND password=? AND role='anggota'"
-        };
-
-        return cariUser(conn, sqlList, username, password);
-    }
-
-    private String cariUser(Connection conn, String[] sqlList, String username, String password) {
-        for (String sql : sqlList) {
-            try {
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, username);
-                pst.setString(2, password);
-
-                ResultSet rs = pst.executeQuery();
-                if (rs.next()) {
-                    return rs.getString("nama");
-                }
-            } catch (Exception e) {
-                // Coba query berikutnya jika tabel/kolom belum tersedia di database.
-            }
-        }
-
-        return null;
-    }
 
     /**
      * @param args the command line arguments

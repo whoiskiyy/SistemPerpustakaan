@@ -1,16 +1,14 @@
 package sistemperpustakaan.view;
 
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.LaporanController;
 
 public class LaporanView extends javax.swing.JFrame {
+    private final LaporanController controller = new LaporanController();
 
     public LaporanView() {
         initComponents();
+        terapkanWarna();
         tampilLaporan();
         setLocationRelativeTo(null);
         setTitle("Laporan Perpustakaan");
@@ -29,6 +27,7 @@ public class LaporanView extends javax.swing.JFrame {
         tblLaporan = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTotalBuku.setText("Total Buku: 0");
 
@@ -45,106 +44,59 @@ public class LaporanView extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(tblLaporan);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTotalBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTotalAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDipinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDikembalikan, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(140, 140, 140)
-                        .addComponent(btnKembali))
-                    .addComponent(lblTotalPeminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTotalBuku)
-                        .addGap(6, 6, 6)
-                        .addComponent(lblTotalAnggota))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDipinjam)
-                        .addGap(6, 6, 6)
-                        .addComponent(lblDikembalikan))
-                    .addComponent(btnKembali))
-                .addGap(6, 6, 6)
-                .addComponent(lblTotalPeminjaman)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
+        getContentPane().add(lblTotalBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 170, -1));
+        getContentPane().add(lblTotalAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 24, 180, -1));
+        getContentPane().add(lblTotalPeminjaman, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 24, 190, -1));
+        getContentPane().add(lblDipinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 58, 170, -1));
+        getContentPane().add(lblDikembalikan, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 58, 180, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 650, 330));
 
         pack();
+        setSize(new java.awt.Dimension(880, 510));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tampilLaporan() {
-        lblTotalBuku.setText("Total Buku: " + hitungData("SELECT COUNT(*) FROM buku"));
-        lblTotalAnggota.setText("Total Anggota: " + hitungData("SELECT COUNT(*) FROM anggota"));
-        lblTotalPeminjaman.setText("Total Peminjaman: " + hitungData("SELECT COUNT(*) FROM peminjaman"));
-        lblDipinjam.setText("Sedang Dipinjam: " + hitungData("SELECT COUNT(*) FROM peminjaman WHERE status IN ('Dipinjam', 'Terlambat')"));
-        lblDikembalikan.setText("Dikembalikan: " + hitungData("SELECT COUNT(*) FROM peminjaman WHERE status='Dikembalikan'"));
-
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Anggota");
-        model.addColumn("Buku");
-        model.addColumn("Tanggal Pinjam");
-        model.addColumn("Tanggal Kembali");
-        model.addColumn("Status");
-
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT * FROM peminjaman ORDER BY id_pinjam DESC";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("id_pinjam"),
-                    rs.getString("nama_anggota"),
-                    rs.getString("judul_buku"),
-                    rs.getString("tanggal_pinjam"),
-                    rs.getString("tanggal_kembali"),
-                    rs.getString("status")
-                });
-            }
-
-            tblLaporan.setModel(model);
+            lblTotalBuku.setText("Total Buku: " + controller.totalBuku());
+            lblTotalAnggota.setText("Total Anggota: " + controller.totalAnggota());
+            lblTotalPeminjaman.setText("Total Peminjaman: " + controller.totalPeminjaman());
+            lblDipinjam.setText("Sedang Dipinjam: " + controller.totalDipinjam());
+            lblDikembalikan.setText("Dikembalikan: " + controller.totalDikembalikan());
+            tblLaporan.setModel(controller.tampilLaporan());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }
-
-    private int hitungData(String sql) {
-        try {
-            Connection conn = Koneksi.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-
-        return 0;
     }
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {
         new MenuUtama().setVisible(true);
         this.dispose();
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        btnKembali.setBackground(button);
+        btnKembali.setForeground(text);
+        btnKembali.setFocusPainted(false);
+        for (javax.swing.JLabel label : new javax.swing.JLabel[]{lblTotalBuku, lblTotalAnggota, lblTotalPeminjaman, lblDipinjam, lblDikembalikan}) {
+            label.setForeground(text);
+        }
+        tblLaporan.setBackground(panel);
+        tblLaporan.setForeground(text);
+        tblLaporan.setGridColor(border);
+        tblLaporan.setSelectionBackground(new java.awt.Color(82, 107, 150));
+        tblLaporan.setSelectionForeground(text);
+        tblLaporan.getTableHeader().setBackground(button);
+        tblLaporan.getTableHeader().setForeground(text);
+        jScrollPane1.getViewport().setBackground(panel);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,19 +1,16 @@
 package sistemperpustakaan.view;
 
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.BukuController;
 
 public class KelolaStokView extends javax.swing.JFrame {
 
     private String idBuku;
+    private final BukuController controller = new BukuController();
 
     public KelolaStokView() {
         initComponents();
+        terapkanWarna();
         pastikanKolomBuku();
         tampilData();
         setLocationRelativeTo(null);
@@ -31,6 +28,7 @@ public class KelolaStokView extends javax.swing.JFrame {
         tblBuku = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Stok Baru");
 
@@ -47,64 +45,19 @@ public class KelolaStokView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblBuku);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20)
-                .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnSimpan)
-                .addGap(117, 117, 117)
-                .addComponent(btnKembali))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnKembali))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
+        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 90, -1));
+        getContentPane().add(txtStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 160, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 620, 330));
 
         pack();
+        setSize(new java.awt.Dimension(850, 480));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tampilData() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID Buku");
-        model.addColumn("Judul");
-        model.addColumn("Penulis");
-        model.addColumn("Genre");
-        model.addColumn("Stok");
-
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT id_buku, judul, penulis, genre, stok FROM buku";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("id_buku"),
-                    rs.getString("judul"),
-                    rs.getString("penulis"),
-                    rs.getString("genre"),
-                    rs.getInt("stok")
-                });
-            }
-
-            tblBuku.setModel(model);
+            tblBuku.setModel(controller.tampilData());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -112,15 +65,7 @@ public class KelolaStokView extends javax.swing.JFrame {
 
     private void pastikanKolomBuku() {
         try {
-            Connection conn = Koneksi.getConnection();
-            DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet rs = metaData.getColumns(null, null, "buku", "genre");
-
-            if (!rs.next()) {
-                String sql = "ALTER TABLE buku ADD COLUMN genre VARCHAR(50)";
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.executeUpdate();
-            }
+            controller.pastikanKolomBuku();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -145,13 +90,7 @@ public class KelolaStokView extends javax.swing.JFrame {
                 return;
             }
 
-            Connection conn = Koneksi.getConnection();
-            String sql = "UPDATE buku SET stok=? WHERE id_buku=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setInt(1, stok);
-            pst.setString(2, idBuku);
-            pst.executeUpdate();
-
+            controller.updateStok(idBuku, stok);
             JOptionPane.showMessageDialog(this, "Stok buku berhasil dikelola");
             tampilData();
         } catch (NumberFormatException e) {
@@ -164,6 +103,35 @@ public class KelolaStokView extends javax.swing.JFrame {
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {
         new MenuUtama().setVisible(true);
         this.dispose();
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        for (javax.swing.JButton tombol : new javax.swing.JButton[]{btnKembali, btnSimpan}) {
+            tombol.setBackground(button);
+            tombol.setForeground(text);
+            tombol.setFocusPainted(false);
+        }
+        jLabel1.setForeground(text);
+        txtStok.setBackground(panel);
+        txtStok.setForeground(text);
+        txtStok.setCaretColor(text);
+        txtStok.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+        tblBuku.setBackground(panel);
+        tblBuku.setForeground(text);
+        tblBuku.setGridColor(border);
+        tblBuku.setSelectionBackground(new java.awt.Color(82, 107, 150));
+        tblBuku.setSelectionForeground(text);
+        tblBuku.getTableHeader().setBackground(button);
+        tblBuku.getTableHeader().setForeground(text);
+        jScrollPane1.getViewport().setBackground(panel);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

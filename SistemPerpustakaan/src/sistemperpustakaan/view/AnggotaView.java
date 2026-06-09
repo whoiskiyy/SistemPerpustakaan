@@ -4,12 +4,8 @@
  */
 package sistemperpustakaan.view;
 
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.AnggotaController;
 
 /**
  *
@@ -17,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AnggotaView extends javax.swing.JFrame {
     String id;
+    private final AnggotaController controller = new AnggotaController();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AnggotaView.class.getName());
 
@@ -25,35 +22,15 @@ public class AnggotaView extends javax.swing.JFrame {
      */
     public AnggotaView() {
         initComponents();
+        terapkanWarna();
         tampilData();
         setLocationRelativeTo(null);
         setTitle("Data Anggota");
     }
 
     public void tampilData() {
-        DefaultTableModel model = new DefaultTableModel();
-
-        model.addColumn("ID");
-        model.addColumn("Nama");
-        model.addColumn("Alamat");
-        model.addColumn("No HP");
-
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT * FROM anggota";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("id_anggota"),
-                    rs.getString("nama"),
-                    rs.getString("alamat"),
-                    rs.getString("no_hp")
-                });
-            }
-
-            tblAnggota.setModel(model);
+            tblAnggota.setModel(controller.tampilData());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -93,6 +70,7 @@ public class AnggotaView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nama");
@@ -136,70 +114,22 @@ public class AnggotaView extends javax.swing.JFrame {
         btnKembali.setText("KEMBALI");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnKembali)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(btnSimpan)))
-                .addGap(20, 20, 20)
-                .addComponent(btnEdit)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(btnHapus)
-                        .addGap(40, 40, 40)
-                        .addComponent(btnReset)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtNama, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                        .addComponent(txtAlamat, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtNoHp)))
-                .addGap(19, 19, 19))
-            .addComponent(jScrollPane2)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnKembali)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNoHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSimpan)
-                    .addComponent(btnEdit)
-                    .addComponent(btnHapus)
-                    .addComponent(btnReset))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
+        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
+        getContentPane().add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 32));
+        getContentPane().add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 150, 32));
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 32));
+
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 80, -1));
+        getContentPane().add(txtNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 240, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 80, -1));
+        getContentPane().add(txtAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 58, 360, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 80, -1));
+        getContentPane().add(txtNoHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 96, 240, -1));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 560, 300));
 
         pack();
+        setSize(new java.awt.Dimension(790, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,12 +140,7 @@ public class AnggotaView extends javax.swing.JFrame {
 
         if (pilih == JOptionPane.YES_OPTION) {
             try {
-                Connection conn = Koneksi.getConnection();
-                String sql = "DELETE FROM anggota WHERE id_anggota=?";
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, id);
-                pst.executeUpdate();
-
+                controller.hapus(id);
                 JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
                 tampilData();
             } catch (Exception e) {
@@ -233,14 +158,7 @@ public class AnggotaView extends javax.swing.JFrame {
         }
 
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "INSERT INTO anggota(nama, alamat, no_hp) VALUES (?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, txtNama.getText());
-            pst.setString(2, txtAlamat.getText());
-            pst.setString(3, txtNoHp.getText());
-            pst.executeUpdate();
-
+            controller.simpan(txtNama.getText(), txtAlamat.getText(), txtNoHp.getText());
             JOptionPane.showMessageDialog(this, "Data Anggota Berhasil Disimpan");
             tampilData();
         } catch (Exception e) {
@@ -259,15 +177,7 @@ public class AnggotaView extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "UPDATE anggota SET nama=?, alamat=?, no_hp=? WHERE id_anggota=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, txtNama.getText());
-            pst.setString(2, txtAlamat.getText());
-            pst.setString(3, txtNoHp.getText());
-            pst.setString(4, id);
-            pst.executeUpdate();
-
+            controller.edit(id, txtNama.getText(), txtAlamat.getText(), txtNoHp.getText());
             JOptionPane.showMessageDialog(this, "Data Berhasil Diubah");
             tampilData();
         } catch (Exception e) {
@@ -284,6 +194,39 @@ public class AnggotaView extends javax.swing.JFrame {
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {
         new MenuUtama().setVisible(true);
         this.dispose();
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        for (javax.swing.JButton tombol : new javax.swing.JButton[]{btnKembali, btnSimpan, btnEdit, btnHapus, btnReset}) {
+            tombol.setBackground(button);
+            tombol.setForeground(text);
+            tombol.setFocusPainted(false);
+        }
+        for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3}) {
+            label.setForeground(text);
+        }
+        for (javax.swing.JTextField field : new javax.swing.JTextField[]{txtNama, txtAlamat, txtNoHp}) {
+            field.setBackground(panel);
+            field.setForeground(text);
+            field.setCaretColor(text);
+            field.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+        }
+        tblAnggota.setBackground(panel);
+        tblAnggota.setForeground(text);
+        tblAnggota.setGridColor(border);
+        tblAnggota.setSelectionBackground(new java.awt.Color(82, 107, 150));
+        tblAnggota.setSelectionForeground(text);
+        tblAnggota.getTableHeader().setBackground(button);
+        tblAnggota.getTableHeader().setForeground(text);
+        jScrollPane2.getViewport().setBackground(panel);
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(border));
     }
 
     public static void main(String args[]) {

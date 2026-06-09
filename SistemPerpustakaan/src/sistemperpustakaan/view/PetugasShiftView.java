@@ -1,11 +1,8 @@
 package sistemperpustakaan.view;
 
-import config.Koneksi;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sistemperpustakaan.controller.PetugasShiftController;
 
 public class PetugasShiftView extends javax.swing.JFrame {
 
@@ -13,10 +10,12 @@ public class PetugasShiftView extends javax.swing.JFrame {
     private String nipDipilih;
     private String namaDipilih;
     private String shiftDipilih;
+    private final PetugasShiftController controller = new PetugasShiftController();
 
     public PetugasShiftView(String namaPustakawan) {
         this.namaPustakawan = namaPustakawan;
         initComponents();
+        terapkanWarna();
         pastikanTabelShiftAktif();
         tampilData();
         setLocationRelativeTo(null);
@@ -37,6 +36,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
         tblPetugas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -65,50 +65,17 @@ public class PetugasShiftView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPetugas);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btnTampilkan)
-                        .addGap(4, 4, 4)
-                        .addComponent(btnUbahShift))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnJadikanAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(194, 194, 194)
-                        .addComponent(btnKembali))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(lblJudul)
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(lblInfo))
-                    .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTampilkan)
-                    .addComponent(btnUbahShift))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnJadikanAktif)
-                    .addComponent(btnKembali))
-                .addGap(13, 13, 13)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 32));
+        getContentPane().add(btnTampilkan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, 32));
+        getContentPane().add(btnUbahShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 170, 32));
+        getContentPane().add(btnJadikanAktif, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 170, 44));
+        getContentPane().add(lblJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 560, 28));
+        getContentPane().add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 260, -1));
+        getContentPane().add(cmbShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 58, 160, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 600, 330));
 
         pack();
+        setSize(new java.awt.Dimension(830, 510));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tampilData() {
@@ -118,51 +85,13 @@ public class PetugasShiftView extends javax.swing.JFrame {
         model.addColumn("Shift Kerja");
 
         try {
-            Connection conn = Koneksi.getConnection();
             String shift = cmbShift.getSelectedItem().toString();
-            ResultSet rs = ambilDataPetugas(conn, shift);
-            while (rs.next()) {
-                model.addRow(new Object[] {
-                    rs.getString("nip"),
-                    rs.getString("nama"),
-                    rs.getString("shift_kerja")
-                });
-            }
-
-            tblPetugas.setModel(model);
+            tblPetugas.setModel(controller.tampilData(shift));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Data shift belum tersedia. Pastikan tabel pustakawan punya kolom nip, nama, dan shift_kerja.");
             tblPetugas.setModel(model);
         }
-    }
-
-    private ResultSet ambilDataPetugas(Connection conn, String shift) throws Exception {
-        String[][] sqlList = {
-            {"SELECT nip, nama, shift_kerja FROM pustakawan", "shift_kerja"},
-            {"SELECT nip, nama, shiftKerja AS shift_kerja FROM pustakawan", "shiftKerja"},
-            {"SELECT nip, username AS nama, shift_kerja FROM user", "shift_kerja"}
-        };
-
-        for (String[] query : sqlList) {
-            try {
-                String sql = query[0];
-                if (!"Semua".equals(shift)) {
-                    sql += " WHERE " + query[1] + "=?";
-                }
-
-                PreparedStatement pst = conn.prepareStatement(sql);
-                if (!"Semua".equals(shift)) {
-                    pst.setString(1, shift);
-                }
-
-                return pst.executeQuery();
-            } catch (Exception e) {
-                // Coba nama tabel/kolom berikutnya.
-            }
-        }
-
-        throw new Exception("Data petugas shift belum tersedia");
     }
 
     private void btnTampilkanActionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,14 +120,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
                 : cmbShift.getSelectedItem().toString();
 
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "REPLACE INTO shift_aktif(id, nip, nama, shift_kerja) VALUES (1, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, nipDipilih);
-            pst.setString(2, namaDipilih);
-            pst.setString(3, shiftAktif);
-            pst.executeUpdate();
-
+            controller.jadikanAktif(nipDipilih, namaDipilih, shiftAktif);
             JOptionPane.showMessageDialog(this, namaDipilih + " sedang bekerja pada shift " + shiftAktif);
             new MenuUtama(namaPustakawan).setVisible(true);
             this.dispose();
@@ -219,60 +141,17 @@ public class PetugasShiftView extends javax.swing.JFrame {
         }
 
         try {
-            Connection conn = Koneksi.getConnection();
-            int jumlahData = updateShiftPetugas(conn, shiftBaru);
-
-            if (jumlahData == 0) {
+            if (!controller.ubahShift(nipDipilih, namaDipilih, shiftBaru)) {
                 JOptionPane.showMessageDialog(this,
                         "Shift belum berubah. Pastikan data NIP/Nama petugas ada di tabel pustakawan.");
                 return;
             }
 
             shiftDipilih = shiftBaru;
-            updateShiftAktifJikaPetugasSedangBekerja(conn, shiftBaru);
             JOptionPane.showMessageDialog(this, "Shift " + namaDipilih + " berhasil diubah");
             tampilData();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
-
-    private int updateShiftPetugas(Connection conn, String shiftBaru) {
-        String[] sqlList = {
-            "UPDATE pustakawan SET shift_kerja=? WHERE nip=? OR nama=?",
-            "UPDATE pustakawan SET shiftKerja=? WHERE nip=? OR nama=?",
-            "UPDATE user SET shift_kerja=? WHERE nip=? OR username=?"
-        };
-
-        for (String sql : sqlList) {
-            try {
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, shiftBaru);
-                pst.setString(2, nipDipilih);
-                pst.setString(3, namaDipilih);
-
-                int jumlahData = pst.executeUpdate();
-                if (jumlahData > 0) {
-                    return jumlahData;
-                }
-            } catch (Exception e) {
-                // Coba struktur tabel/kolom berikutnya.
-            }
-        }
-
-        return 0;
-    }
-
-    private void updateShiftAktifJikaPetugasSedangBekerja(Connection conn, String shiftBaru) {
-        try {
-            String sql = "UPDATE shift_aktif SET shift_kerja=? WHERE nip=? OR nama=?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, shiftBaru);
-            pst.setString(2, nipDipilih);
-            pst.setString(3, namaDipilih);
-            pst.executeUpdate();
-        } catch (Exception e) {
-            // Abaikan jika belum ada petugas aktif.
         }
     }
 
@@ -283,15 +162,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
 
     private void pastikanTabelShiftAktif() {
         try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "CREATE TABLE IF NOT EXISTS shift_aktif ("
-                    + "id INT PRIMARY KEY,"
-                    + "nip VARCHAR(50),"
-                    + "nama VARCHAR(100),"
-                    + "shift_kerja VARCHAR(50)"
-                    + ")";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.executeUpdate();
+            controller.pastikanTabelShiftAktif();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -304,6 +175,34 @@ public class PetugasShiftView extends javax.swing.JFrame {
         }
 
         return true;
+    }
+
+    private void terapkanWarna() {
+        java.awt.Color background = new java.awt.Color(55, 57, 62);
+        java.awt.Color panel = new java.awt.Color(68, 71, 78);
+        java.awt.Color button = new java.awt.Color(88, 92, 100);
+        java.awt.Color border = new java.awt.Color(105, 109, 118);
+        java.awt.Color text = new java.awt.Color(245, 245, 245);
+
+        getContentPane().setBackground(background);
+        for (javax.swing.JButton tombol : new javax.swing.JButton[]{btnKembali, btnTampilkan, btnUbahShift, btnJadikanAktif}) {
+            tombol.setBackground(button);
+            tombol.setForeground(text);
+            tombol.setFocusPainted(false);
+        }
+        lblJudul.setForeground(text);
+        lblInfo.setForeground(text);
+        cmbShift.setBackground(panel);
+        cmbShift.setForeground(text);
+        tblPetugas.setBackground(panel);
+        tblPetugas.setForeground(text);
+        tblPetugas.setGridColor(border);
+        tblPetugas.setSelectionBackground(new java.awt.Color(82, 107, 150));
+        tblPetugas.setSelectionForeground(text);
+        tblPetugas.getTableHeader().setBackground(button);
+        tblPetugas.getTableHeader().setForeground(text);
+        jScrollPane1.getViewport().setBackground(panel);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
