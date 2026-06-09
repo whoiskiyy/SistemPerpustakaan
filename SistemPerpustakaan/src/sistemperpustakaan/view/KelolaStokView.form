@@ -3,40 +3,8 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3" />
   </Properties>
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Group type="103" groupAlignment="0" attributes="0">
-            <Component id="jLabel1" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="txtStok" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnSimpan" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnKembali" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jScrollPane1" alignment="0" min="-2" max="32767" attributes="0" />
-          </Group>
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jLabel1" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="txtStok" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnSimpan" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnKembali" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jScrollPane1" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="false" />
   </Layout>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1" />
@@ -58,8 +26,19 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Stok Baru" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="6" y="8" width="-1" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtStok"></Component>
+    <Component class="javax.swing.JTextField" name="txtStok">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="76" y="5" width="120" height="-1" />
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JButton" name="btnSimpan">
       <Properties>
         <Property name="text" type="java.lang.String" value="SIMPAN STOK" />
@@ -67,6 +46,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="208" y="5" width="-1" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnKembali">
       <Properties>
@@ -75,6 +59,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKembaliActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="430" y="5" width="-1" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -88,6 +77,11 @@
           </Events>
         </Component>
       </SubComponents>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="40" width="520" height="310" />
+        </Constraint>
+      </Constraints>
     </Container>
   </SubComponents>
 </Form>

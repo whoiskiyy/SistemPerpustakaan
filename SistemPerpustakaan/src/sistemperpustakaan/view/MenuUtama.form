@@ -3,58 +3,8 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3" />
   </Properties>
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Group type="103" groupAlignment="0" attributes="0">
-            <Component id="lblJudul" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblNama" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblNip" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblShiftKerja" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnTambahBuku" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnKelolaStok" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnPeminjamanPengembalian" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnPetugasShift" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnAnggota" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnLaporan" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnLogout" alignment="0" min="-2" max="32767" attributes="0" />
-          </Group>
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblJudul" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblNama" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblNip" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblShiftKerja" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnTambahBuku" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnKelolaStok" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnPeminjamanPengembalian" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnPetugasShift" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnAnggota" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnLaporan" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnLogout" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="false" />
   </Layout>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1" />
@@ -77,24 +27,44 @@
         <Property name="horizontalAlignment" type="int" value="0" />
         <Property name="text" type="java.lang.String" value="MENU PUSTAKAWAN" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="20" width="220" height="32" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNama">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0" />
         <Property name="text" type="java.lang.String" value="Nama: -" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="58" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNip">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0" />
         <Property name="text" type="java.lang.String" value="NIP: -" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="80" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblShiftKerja">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0" />
         <Property name="text" type="java.lang.String" value="Shift Kerja: -" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="102" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnTambahBuku">
       <Properties>
@@ -103,6 +73,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahBukuActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="136" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnKelolaStok">
       <Properties>
@@ -111,6 +86,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKelolaStokActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="171" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnPeminjamanPengembalian">
       <Properties>
@@ -119,6 +99,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPeminjamanPengembalianActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="206" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnPetugasShift">
       <Properties>
@@ -127,6 +112,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPetugasShiftActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="241" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnAnggota">
       <Properties>
@@ -135,6 +125,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnggotaActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="276" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnLaporan">
       <Properties>
@@ -143,6 +138,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="311" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogout">
       <Properties>
@@ -151,6 +151,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="90" y="346" width="220" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
   </SubComponents>
 </Form>

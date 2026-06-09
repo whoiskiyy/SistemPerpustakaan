@@ -22,49 +22,8 @@
       <Color blue="fe" green="f2" red="e0" type="rgb" />
     </Property>
   </Properties>
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Group type="103" groupAlignment="0" attributes="0">
-            <Component id="jLabel1" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jLabel2" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="txtUsername" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="txtPassword" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jLabel3" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="cmbRole" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jButton1" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jPanel4" alignment="0" min="-2" max="32767" attributes="0" />
-          </Group>
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jLabel1" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jLabel2" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="txtUsername" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="txtPassword" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jLabel3" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="cmbRole" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jButton1" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jPanel4" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="false" />
   </Layout>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1" />
@@ -87,22 +46,48 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Username :" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="86" y="68" width="70" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Password  :" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="86" y="96" width="70" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUsername">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsernameActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="174" y="68" width="202" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="txtPassword"></Component>
+    <Component class="javax.swing.JPasswordField" name="txtPassword">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="174" y="96" width="202" height="-1" />
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Login Sebagai :" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="86" y="124" width="90" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbRole">
       <Properties>
@@ -116,6 +101,11 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;" />
       </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="174" y="124" width="202" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
@@ -124,6 +114,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="163" y="172" width="-1" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel4">
       <Properties>
@@ -153,34 +148,21 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel2">
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                <EmptySpace min="0" pref="0" max="32767" attributes="0" />
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                <EmptySpace min="0" pref="0" max="32767" attributes="0" />
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+            <Property name="useNullLayout" type="boolean" value="false" />
           </Layout>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel3">
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                <EmptySpace min="0" pref="0" max="32767" attributes="0" />
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                <EmptySpace min="0" pref="0" max="32767" attributes="0" />
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+            <Property name="useNullLayout" type="boolean" value="false" />
           </Layout>
         </Container>
       </SubComponents>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="0" width="400" height="330" />
+        </Constraint>
+      </Constraints>
     </Container>
   </SubComponents>
 </Form>

@@ -3,46 +3,8 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3" />
   </Properties>
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Group type="103" groupAlignment="0" attributes="0">
-            <Component id="lblTotalBuku" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblTotalAnggota" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblTotalPeminjaman" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblDipinjam" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="lblDikembalikan" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="btnKembali" alignment="0" min="-2" max="32767" attributes="0" />
-            <Component id="jScrollPane1" alignment="0" min="-2" max="32767" attributes="0" />
-          </Group>
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-        <Group type="102" alignment="0" attributes="0">
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblTotalBuku" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblTotalAnggota" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblTotalPeminjaman" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblDipinjam" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="lblDikembalikan" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="btnKembali" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <Component id="jScrollPane1" min="-2" max="-2" attributes="0" />
-          <EmptySpace max="-2" attributes="0" />
-          <EmptySpace max="32767" attributes="0" />
-        </Group>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="false" />
   </Layout>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1" />
@@ -64,26 +26,51 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Total Buku: 0" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="6" y="6" width="160" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotalAnggota">
       <Properties>
         <Property name="text" type="java.lang.String" value="Total Anggota: 0" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="6" y="28" width="160" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTotalPeminjaman">
       <Properties>
         <Property name="text" type="java.lang.String" value="Total Peminjaman: 0" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="6" y="50" width="180" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDipinjam">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sedang Dipinjam: 0" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="230" y="6" width="180" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDikembalikan">
       <Properties>
         <Property name="text" type="java.lang.String" value="Dikembalikan: 0" />
       </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="230" y="28" width="180" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnKembali">
       <Properties>
@@ -92,6 +79,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKembaliActionPerformed" />
       </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="550" y="6" width="-1" height="-1" />
+        </Constraint>
+      </Constraints>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -101,6 +93,11 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tblLaporan"></Component>
       </SubComponents>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="86" width="640" height="320" />
+        </Constraint>
+      </Constraints>
     </Container>
   </SubComponents>
 </Form>
