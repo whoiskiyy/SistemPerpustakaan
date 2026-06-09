@@ -84,17 +84,17 @@ public class AnggotaView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nama");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 80, -1));
-        getContentPane().add(txtNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 240, -1));
+        getContentPane().add(txtNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 250, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Alamat");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 80, -1));
-        getContentPane().add(txtAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 58, 240, -1));
+        getContentPane().add(txtAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 58, 250, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("No Hp");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 80, -1));
-        getContentPane().add(txtNoHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 96, 240, -1));
+        getContentPane().add(txtNoHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 96, 250, -1));
 
         tblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
