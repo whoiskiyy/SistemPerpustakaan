@@ -25,42 +25,39 @@ public class PetugasShiftView extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         lblJudul = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
         cmbShift = new javax.swing.JComboBox<>();
         btnTampilkan = new javax.swing.JButton();
-        btnJadikanAktif = new javax.swing.JButton();
         btnUbahShift = new javax.swing.JButton();
+        btnJadikanAktif = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPetugas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16));
+        lblJudul.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblJudul.setText("PETUGAS SHIFT KERJA");
 
-        lblInfo.setText("Login: " + (namaPustakawan == null || namaPustakawan.isEmpty() ? "-" : namaPustakawan));
+        lblInfo.setText("Login: -");
 
         cmbShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Pagi", "Siang", "Malam" }));
 
         btnTampilkan.setText("TAMPILKAN");
         btnTampilkan.addActionListener(this::btnTampilkanActionPerformed);
 
-        btnJadikanAktif.setText("JADIKAN SEDANG BEKERJA");
-        btnJadikanAktif.addActionListener(this::btnJadikanAktifActionPerformed);
-
         btnUbahShift.setText("UBAH SHIFT");
         btnUbahShift.addActionListener(this::btnUbahShiftActionPerformed);
+
+        btnJadikanAktif.setText("JADIKAN SEDANG BEKERJA");
+        btnJadikanAktif.addActionListener(this::btnJadikanAktifActionPerformed);
 
         btnKembali.setText("KEMBALI");
         btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
-        tblPetugas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {"NIP", "Nama", "Shift Kerja"}
-        ));
         tblPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPetugasMouseClicked(evt);
@@ -72,40 +69,43 @@ public class PetugasShiftView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblJudul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(btnTampilkan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUbahShift)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnJadikanAktif)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(btnKembali)))
-                .addContainerGap())
+                        .addGap(4, 4, 4)
+                        .addComponent(btnUbahShift))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnJadikanAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(194, 194, 194)
+                        .addComponent(btnKembali))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(lblJudul)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblInfo)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(lblInfo))
                     .addComponent(cmbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTampilkan)
-                    .addComponent(btnUbahShift)
+                    .addComponent(btnUbahShift))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnJadikanAktif)
                     .addComponent(btnKembali))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
