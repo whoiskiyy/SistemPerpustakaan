@@ -18,6 +18,7 @@ public class KelolaStokView extends javax.swing.JFrame {
         setTitle("Kelola Stok Buku");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBuku = new javax.swing.JTable();
@@ -77,7 +78,7 @@ public class KelolaStokView extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void tampilData() {
         DefaultTableModel model = new DefaultTableModel();
@@ -149,10 +150,12 @@ public class KelolaStokView extends javax.swing.JFrame {
         this.dispose();
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBuku;
     private javax.swing.JTextField txtStok;
+    // End of variables declaration//GEN-END:variables
 }

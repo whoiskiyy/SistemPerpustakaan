@@ -163,6 +163,7 @@ public class BukuView extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         txtIdBuku = new javax.swing.JTextField();
         txtJudul = new javax.swing.JTextField();
@@ -272,7 +273,7 @@ public class BukuView extends javax.swing.JFrame {
         getContentPane().add(txtCari, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 180, 154, -1));
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {
         if (id == null || id.isEmpty()) {
@@ -407,6 +408,7 @@ public class BukuView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new BukuView().setVisible(true));
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
@@ -426,4 +428,5 @@ public class BukuView extends javax.swing.JFrame {
     private javax.swing.JTextField txtJudul;
     private javax.swing.JTextField txtPenulis;
     private javax.swing.JTextField txtStok;
+    // End of variables declaration//GEN-END:variables
 }

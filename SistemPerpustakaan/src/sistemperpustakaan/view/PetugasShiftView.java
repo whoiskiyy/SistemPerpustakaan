@@ -23,6 +23,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
         setTitle("Petugas Shift");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         lblJudul = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
@@ -108,7 +109,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void tampilData() {
         DefaultTableModel model = new DefaultTableModel();
@@ -305,6 +306,7 @@ public class PetugasShiftView extends javax.swing.JFrame {
         return true;
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnJadikanAktif;
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnTampilkan;
@@ -314,4 +316,5 @@ public class PetugasShiftView extends javax.swing.JFrame {
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblJudul;
     private javax.swing.JTable tblPetugas;
+    // End of variables declaration//GEN-END:variables
 }

@@ -25,6 +25,7 @@ public class AnggotaFiturView extends javax.swing.JFrame {
         tampilUlasan();
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         lblJudul = new javax.swing.JLabel();
         lblNomor = new javax.swing.JLabel();
@@ -153,7 +154,7 @@ public class AnggotaFiturView extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void tampilProfil() {
         try {
@@ -363,6 +364,7 @@ public class AnggotaFiturView extends javax.swing.JFrame {
         return teks == null || teks.isEmpty() ? "-" : teks;
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnPinjam;
     private javax.swing.JButton btnUlasan;
@@ -380,4 +382,5 @@ public class AnggotaFiturView extends javax.swing.JFrame {
     private javax.swing.JTextField txtTanggalKembali;
     private javax.swing.JTextField txtTanggalPinjam;
     private javax.swing.JTextArea txtUlasan;
+    // End of variables declaration//GEN-END:variables
 }

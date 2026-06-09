@@ -11,6 +11,7 @@ public class MenuAnggota extends javax.swing.JFrame {
         setTitle("Menu Anggota");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         jLabel1 = new javax.swing.JLabel();
         btnFiturAnggota = new javax.swing.JButton();
@@ -59,7 +60,7 @@ public class MenuAnggota extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void btnBukuActionPerformed(java.awt.event.ActionEvent evt) {
         new BukuView(true, namaAnggota).setVisible(true);
@@ -76,8 +77,10 @@ public class MenuAnggota extends javax.swing.JFrame {
         this.dispose();
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuku;
     private javax.swing.JButton btnFiturAnggota;
     private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
+    // End of variables declaration//GEN-END:variables
 }

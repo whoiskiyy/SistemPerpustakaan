@@ -35,6 +35,7 @@ public class MenuUtama extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         lblJudul = new javax.swing.JLabel();
         lblNama = new javax.swing.JLabel();
@@ -132,7 +133,7 @@ public class MenuUtama extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void tampilProfilPustakawan() {
         String[] profil = cariProfilPustakawan();
@@ -241,6 +242,7 @@ public class MenuUtama extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new MenuUtama().setVisible(true));
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnggota;
     private javax.swing.JButton btnKelolaStok;
     private javax.swing.JButton btnLaporan;
@@ -252,4 +254,5 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JLabel lblNip;
     private javax.swing.JLabel lblShiftKerja;
     private javax.swing.JLabel lblJudul;
+    // End of variables declaration//GEN-END:variables
 }

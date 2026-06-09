@@ -1,162 +1,156 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="3" />
   </Properties>
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+        <Group type="102" alignment="0" attributes="0">
+          <EmptySpace max="-2" attributes="0" />
+          <Group type="103" groupAlignment="0" attributes="0">
+            <Component id="lblJudul" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="lblNama" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="lblNip" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="lblShiftKerja" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnTambahBuku" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnKelolaStok" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnPeminjamanPengembalian" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnPetugasShift" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnAnggota" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnLaporan" alignment="0" min="-2" max="32767" attributes="0" />
+            <Component id="btnLogout" alignment="0" min="-2" max="32767" attributes="0" />
+          </Group>
+          <EmptySpace max="32767" attributes="0" />
+        </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+        <Group type="102" alignment="0" attributes="0">
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="lblJudul" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="lblNama" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="lblNip" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="lblShiftKerja" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnTambahBuku" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnKelolaStok" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnPeminjamanPengembalian" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnPetugasShift" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnAnggota" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnLaporan" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <Component id="btnLogout" min="-2" max="-2" attributes="0" />
+          <EmptySpace max="-2" attributes="0" />
+          <EmptySpace max="32767" attributes="0" />
+        </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
   <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1" />
+    <SyntheticProperty name="generateCenter" type="boolean" value="false" />
   </SyntheticProperties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
-    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3"/>
-    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0" />
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true" />
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1" />
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3" />
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false" />
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2" />
   </AuxValues>
-  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-    <Property name="useNullLayout" type="boolean" value="false"/>
-  </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblJudul">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="MENU PUSTAKAWAN"/>
+        <Property name="horizontalAlignment" type="int" value="0" />
+        <Property name="text" type="java.lang.String" value="MENU PUSTAKAWAN" />
       </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="20" width="220" height="32"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNama">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Nama: -"/>
+        <Property name="horizontalAlignment" type="int" value="0" />
+        <Property name="text" type="java.lang.String" value="Nama: -" />
       </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="58" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNip">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="NIP: -"/>
+        <Property name="horizontalAlignment" type="int" value="0" />
+        <Property name="text" type="java.lang.String" value="NIP: -" />
       </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="80" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblShiftKerja">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Shift Kerja: -"/>
+        <Property name="horizontalAlignment" type="int" value="0" />
+        <Property name="text" type="java.lang.String" value="Shift Kerja: -" />
       </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="102" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnTambahBuku">
       <Properties>
-        <Property name="text" type="java.lang.String" value="TAMBAH BUKU"/>
+        <Property name="text" type="java.lang.String" value="TAMBAH BUKU" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahBukuActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahBukuActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="136" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnKelolaStok">
       <Properties>
-        <Property name="text" type="java.lang.String" value="KELOLA STOK"/>
+        <Property name="text" type="java.lang.String" value="KELOLA STOK" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKelolaStokActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKelolaStokActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="171" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnPeminjamanPengembalian">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PEMINJAMAN &amp; PENGEMBALIAN"/>
+        <Property name="text" type="java.lang.String" value="PEMINJAMAN &amp; PENGEMBALIAN" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPeminjamanPengembalianActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPeminjamanPengembalianActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="206" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnPetugasShift">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PETUGAS SHIFT"/>
+        <Property name="text" type="java.lang.String" value="PETUGAS SHIFT" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPetugasShiftActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPetugasShiftActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="241" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnAnggota">
       <Properties>
-        <Property name="text" type="java.lang.String" value="DATA ANGGOTA"/>
+        <Property name="text" type="java.lang.String" value="DATA ANGGOTA" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnggotaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnggotaActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="276" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnLaporan">
       <Properties>
-        <Property name="text" type="java.lang.String" value="LIHAT LAPORAN"/>
+        <Property name="text" type="java.lang.String" value="LIHAT LAPORAN" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="311" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogout">
       <Properties>
-        <Property name="text" type="java.lang.String" value="LOGOUT"/>
+        <Property name="text" type="java.lang.String" value="LOGOUT" />
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed" />
       </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="90" y="346" width="220" height="-1"/>
-        </Constraint>
-      </Constraints>
     </Component>
   </SubComponents>
 </Form>

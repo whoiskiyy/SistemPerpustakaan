@@ -16,6 +16,7 @@ public class LaporanView extends javax.swing.JFrame {
         setTitle("Laporan Perpustakaan");
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         lblTotalBuku = new javax.swing.JLabel();
         lblTotalAnggota = new javax.swing.JLabel();
@@ -83,7 +84,7 @@ public class LaporanView extends javax.swing.JFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void tampilLaporan() {
         lblTotalBuku.setText("Total Buku: " + hitungData("SELECT COUNT(*) FROM buku"));
@@ -144,6 +145,7 @@ public class LaporanView extends javax.swing.JFrame {
         this.dispose();
     }
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKembali;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDikembalikan;
@@ -152,4 +154,5 @@ public class LaporanView extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotalBuku;
     private javax.swing.JLabel lblTotalPeminjaman;
     private javax.swing.JTable tblLaporan;
+    // End of variables declaration//GEN-END:variables
 }
