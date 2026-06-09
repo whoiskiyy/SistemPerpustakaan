@@ -46,7 +46,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private void initComponents() {
 
         btnTambahBuku = new javax.swing.JButton();
-        btnKelolaStok = new javax.swing.JButton();
         btnPeminjamanPengembalian = new javax.swing.JButton();
         btnPetugasShift = new javax.swing.JButton();
         btnAnggota = new javax.swing.JButton();
@@ -81,47 +80,40 @@ public class MenuUtama extends javax.swing.JFrame {
         btnTambahBuku.addActionListener(this::btnTambahBukuActionPerformed);
         getContentPane().add(btnTambahBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 14, 180, 32));
 
-        btnKelolaStok.setBackground(new java.awt.Color(88, 92, 100));
-        btnKelolaStok.setForeground(new java.awt.Color(245, 245, 245));
-        btnKelolaStok.setText("KELOLA STOK");
-        btnKelolaStok.setFocusPainted(false);
-        btnKelolaStok.addActionListener(this::btnKelolaStokActionPerformed);
-        getContentPane().add(btnKelolaStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 54, 180, 32));
-
         btnPeminjamanPengembalian.setBackground(new java.awt.Color(88, 92, 100));
         btnPeminjamanPengembalian.setForeground(new java.awt.Color(245, 245, 245));
         btnPeminjamanPengembalian.setText("PEMINJAMAN");
         btnPeminjamanPengembalian.setFocusPainted(false);
         btnPeminjamanPengembalian.addActionListener(this::btnPeminjamanPengembalianActionPerformed);
-        getContentPane().add(btnPeminjamanPengembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 94, 180, 32));
+        getContentPane().add(btnPeminjamanPengembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 54, 180, 32));
 
         btnPetugasShift.setBackground(new java.awt.Color(88, 92, 100));
         btnPetugasShift.setForeground(new java.awt.Color(245, 245, 245));
         btnPetugasShift.setText("PETUGAS SHIFT");
         btnPetugasShift.setFocusPainted(false);
         btnPetugasShift.addActionListener(this::btnPetugasShiftActionPerformed);
-        getContentPane().add(btnPetugasShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 134, 180, 32));
+        getContentPane().add(btnPetugasShift, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 94, 180, 32));
 
         btnAnggota.setBackground(new java.awt.Color(88, 92, 100));
         btnAnggota.setForeground(new java.awt.Color(245, 245, 245));
         btnAnggota.setText("DATA ANGGOTA");
         btnAnggota.setFocusPainted(false);
         btnAnggota.addActionListener(this::btnAnggotaActionPerformed);
-        getContentPane().add(btnAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 174, 180, 32));
+        getContentPane().add(btnAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 134, 180, 32));
 
         btnLaporan.setBackground(new java.awt.Color(88, 92, 100));
         btnLaporan.setForeground(new java.awt.Color(245, 245, 245));
         btnLaporan.setText("LIHAT LAPORAN");
         btnLaporan.setFocusPainted(false);
         btnLaporan.addActionListener(this::btnLaporanActionPerformed);
-        getContentPane().add(btnLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 214, 180, 32));
+        getContentPane().add(btnLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 174, 180, 32));
 
         btnLogout.setBackground(new java.awt.Color(88, 92, 100));
         btnLogout.setForeground(new java.awt.Color(245, 245, 245));
         btnLogout.setText("LOGOUT");
         btnLogout.setFocusPainted(false);
         btnLogout.addActionListener(this::btnLogoutActionPerformed);
-        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 254, 180, 32));
+        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 214, 180, 32));
 
         panelOverview.setBackground(new java.awt.Color(68, 71, 78));
         panelOverview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(105, 109, 118)));
@@ -218,11 +210,6 @@ public class MenuUtama extends javax.swing.JFrame {
         this.dispose();
     }
 
-    private void btnKelolaStokActionPerformed(java.awt.event.ActionEvent evt) {
-        new KelolaStokView().setVisible(true);
-        this.dispose();
-    }
-
     private void btnPeminjamanPengembalianActionPerformed(java.awt.event.ActionEvent evt) {
         new PeminjamanView().setVisible(true);
         this.dispose();
@@ -265,7 +252,6 @@ public class MenuUtama extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnggota;
-    private javax.swing.JButton btnKelolaStok;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPeminjamanPengembalian;
