@@ -128,7 +128,7 @@ private void terapkanWarna() {
         tombol.setForeground(text);
         tombol.setFocusPainted(false);
     }
-    for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3, jLabel4, jLabel5}) {
+    for (javax.swing.JLabel label : new javax.swing.JLabel[]{jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7}) {
         label.setForeground(text);
     }
     for (javax.swing.JTextField field : new javax.swing.JTextField[]{txtTanggalPinjam, txtTanggalKembali}) {
@@ -160,68 +160,87 @@ private void terapkanWarna() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtTanggalPinjam = new javax.swing.JTextField();
-        txtTanggalKembali = new javax.swing.JTextField();
+        btnKembali = new javax.swing.JButton();
         btnSimpan = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
-        btnKembali = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmbNamaAnggota = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        cmbJudulBuku = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        txtTanggalPinjam = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtTanggalKembali = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeminjaman = new javax.swing.JTable();
-        cmbNamaAnggota = new javax.swing.JComboBox<>();
-        cmbJudulBuku = new javax.swing.JComboBox<>();
-        cmbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Nama Anggota");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Judul Buku");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Tanggal Pinjam");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Tanggal Kembali");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Status");
+        btnKembali.setText("KEMBALI");
+        btnKembali.addActionListener(this::btnKembaliActionPerformed);
+        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
 
         btnSimpan.setText("SIMPAN");
         btnSimpan.addActionListener(this::btnSimpanActionPerformed);
+        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
 
         btnEdit.setText("EDIT");
         btnEdit.addActionListener(this::btnEditActionPerformed);
+        getContentPane().add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 32));
 
         btnHapus.setText("HAPUS");
         btnHapus.addActionListener(this::btnHapusActionPerformed);
+        getContentPane().add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 150, 32));
 
         btnReset.setText("RESET");
         btnReset.addActionListener(this::btnResetActionPerformed);
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 32));
 
-        btnKembali.setText("KEMBALI");
-        btnKembali.addActionListener(this::btnKembaliActionPerformed);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Nama Anggota");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 110, -1));
 
-        tblPeminjaman.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        cmbNamaAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cmbNamaAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 210, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Judul Buku");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 24, 90, -1));
+
+        cmbJudulBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbJudulBuku.addActionListener(this::cmbJudulBukuActionPerformed);
+        getContentPane().add(cmbJudulBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 190, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Tanggal Pinjam");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 110, -1));
+        getContentPane().add(txtTanggalPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 58, 210, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Tanggal Kembali");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 62, 120, -1));
+        getContentPane().add(txtTanggalKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 58, 170, -1));
+
+        jLabel6.setText("Format: yyyy-MM-dd");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 84, 250, -1));
+
+        jLabel7.setText("Format: yyyy-MM-dd");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 84, 170, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Status");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 112, 110, -1));
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dipinjam", "Dikembalikan", "Terlambat" }));
+        getContentPane().add(cmbStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 108, 210, -1));
+
         tblPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblPeminjamanMouseClicked(evt);
@@ -229,36 +248,17 @@ private void terapkanWarna() {
         });
         jScrollPane1.setViewportView(tblPeminjaman);
 
-        cmbNamaAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbJudulBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbJudulBuku.addActionListener(this::cmbJudulBukuActionPerformed);
-
-        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dipinjam", "Dikembalikan", "Terlambat" }));
-
-        getContentPane().add(btnKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, 32));
-        getContentPane().add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 150, 32));
-        getContentPane().add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 32));
-        getContentPane().add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 150, 32));
-        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 32));
-
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 24, 110, -1));
-        getContentPane().add(cmbNamaAnggota, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 210, -1));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 24, 90, -1));
-        getContentPane().add(cmbJudulBuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 190, -1));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 62, 110, -1));
-        getContentPane().add(txtTanggalPinjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 58, 210, -1));
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 62, 120, -1));
-        getContentPane().add(txtTanggalKembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 58, 170, -1));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 110, -1));
-        getContentPane().add(cmbStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 96, 210, -1));
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 700, 330));
 
         pack();
-        setSize(new java.awt.Dimension(930, 550));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+if (id != null && !id.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Data sudah dipilih. Gunakan tombol EDIT untuk mengubah data, atau RESET untuk input baru.");
+    return;
+}
+
 if (!inputValid()) {
     return;
 }
@@ -275,6 +275,7 @@ if (!inputValid()) {
     JOptionPane.showMessageDialog(this,
             "Data Peminjaman Berhasil Disimpan");
 
+    resetForm();
     tampilData();
     loadBuku();
 
@@ -288,6 +289,9 @@ if (!inputValid()) {
 
     private void tblPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPeminjamanMouseClicked
 int baris = tblPeminjaman.getSelectedRow();
+if (baris < 0) {
+    return;
+}
 
 id = tblPeminjaman.getValueAt(baris, 0).toString();
 
@@ -322,6 +326,7 @@ try {
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Diubah");
 
+    resetForm();
     tampilData();
     loadBuku();
 
@@ -334,6 +339,11 @@ try {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+if (id == null || id.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus");
+    return;
+}
+
 int pilih = JOptionPane.showConfirmDialog(this,
         "Yakin ingin menghapus?",
         "Konfirmasi",
@@ -346,6 +356,7 @@ if (pilih == JOptionPane.YES_OPTION) {
     JOptionPane.showMessageDialog(this,
             "Data Berhasil Dihapus");
 
+    resetForm();
     tampilData();
     loadBuku();
 
@@ -358,12 +369,18 @@ if (pilih == JOptionPane.YES_OPTION) {
     }//GEN-LAST:event_btnHapusActionPerformed
     }
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+resetForm();
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void resetForm() {
 cmbNamaAnggota.setSelectedIndex(0);
 cmbJudulBuku.setSelectedIndex(0);
 txtTanggalPinjam.setText("");
 txtTanggalKembali.setText("");
-cmbStatus.setSelectedIndex(0);        
-    }//GEN-LAST:event_btnResetActionPerformed
+cmbStatus.setSelectedIndex(0);
+id = null;
+tblPeminjaman.clearSelection();
+    }
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
 new MenuUtama().setVisible(true);
@@ -414,6 +431,8 @@ this.dispose();        // TODO add your handling code here:
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPeminjaman;
     private javax.swing.JTextField txtTanggalKembali;

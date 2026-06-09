@@ -131,11 +131,15 @@ public class PeminjamanController {
                 }
             }
 
-            if (statusDipinjam(statusLama)) {
-                ubahStokBuku(conn, judulLama, 1);
-            }
+            boolean lamaDipinjam = statusDipinjam(statusLama);
+            boolean baruDipinjam = statusDipinjam(statusBaru);
 
-            if (statusDipinjam(statusBaru)) {
+            if (lamaDipinjam && baruDipinjam && !judulLama.equals(judulBaru)) {
+                ubahStokBuku(conn, judulLama, 1);
+                ubahStokBuku(conn, judulBaru, -1);
+            } else if (lamaDipinjam && !baruDipinjam) {
+                ubahStokBuku(conn, judulLama, 1);
+            } else if (!lamaDipinjam && baruDipinjam) {
                 ubahStokBuku(conn, judulBaru, -1);
             }
 
@@ -148,7 +152,10 @@ public class PeminjamanController {
                 pst.setString(4, tanggalKembali);
                 pst.setString(5, statusBaru);
                 pst.setString(6, id);
-                pst.executeUpdate();
+                int jumlahUpdate = pst.executeUpdate();
+                if (jumlahUpdate == 0) {
+                    throw new Exception("Data peminjaman tidak ditemukan");
+                }
             }
 
             conn.commit();

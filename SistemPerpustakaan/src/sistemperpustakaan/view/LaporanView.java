@@ -1,6 +1,9 @@
 package sistemperpustakaan.view;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import sistemperpustakaan.controller.LaporanController;
 
 public class LaporanView extends javax.swing.JFrame {
@@ -9,6 +12,7 @@ public class LaporanView extends javax.swing.JFrame {
     public LaporanView() {
         initComponents();
         terapkanWarna();
+        warnaStatusTerlambat();
         tampilLaporan();
         setLocationRelativeTo(null);
         setTitle("Laporan Perpustakaan");
@@ -97,6 +101,37 @@ public class LaporanView extends javax.swing.JFrame {
         tblLaporan.getTableHeader().setForeground(text);
         jScrollPane1.getViewport().setBackground(panel);
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(border));
+    }
+
+    private void warnaStatusTerlambat() {
+        tblLaporan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component component = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+
+                if (table.getColumnCount() <= 5) {
+                    return component;
+                }
+
+                Object statusValue = table.getValueAt(row, 5);
+                String status = statusValue == null ? "" : statusValue.toString();
+                if ("Terlambat".equalsIgnoreCase(status)) {
+                    component.setBackground(new java.awt.Color(95, 63, 67));
+                    component.setForeground(new java.awt.Color(255, 205, 210));
+                } else if (isSelected) {
+                    component.setBackground(table.getSelectionBackground());
+                    component.setForeground(table.getSelectionForeground());
+                } else {
+                    component.setBackground(table.getBackground());
+                    component.setForeground(table.getForeground());
+                }
+
+                return component;
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
